@@ -30,7 +30,11 @@ from memhunter.config import (
     is_valid_public_c2_ip,
 )
 
-IPV4_PORT_RE = re.compile(rb"\b((?:\d{1,3}\.){3}\d{1,3})(?::(\d{2,5}))?\b")
+IPV4_PORT_RE = re.compile(rb"(?<![0-9.])((?:\d{1,3}\.){3}\d{1,3})(?::(\d{2,5}))?(?![0-9.])")
+C2_HOST_PORT_RE = re.compile(
+    rb"\b([a-zA-Z0-9-]{3,48}\.(?:shop|top|xyz|ru|su|cc|pw|icu|cyou|onion|link|live|club|online|site|fun|space|tech|store|info|biz|org|net|com)):(\d{2,5})\b"
+)
+UTF16LE_STR_RE = re.compile(rb"(?:[\x20-\x7e]\x00){5,}")
 URL_RE = re.compile(rb"https?://[a-zA-Z0-9._~:/?#\[\]@!$&'()*+,;=%-]{8,220}")
 DISCORD_WEBHOOK_RE = re.compile(
     rb"https?://(?:ptb\.|canary\.)?discord(?:app)?\.com/api/webhooks/\d{15,22}/[A-Za-z0-9_-]{50,80}"
@@ -162,10 +166,10 @@ def carve_memory_buffers(
 
     for dmp_path in dump_paths:
         raw = dmp_path.read_bytes()
-        # Also normalize UTF-16LE ASCII sequences so wide-char strings in .NET / Win32 heaps are carved
-        wide_ascii = raw.replace(b"\x00", b"")
+        # Extract printable UTF-16LE sequences separated by newlines so null terminators are respected
+        wide_ascii = b"\n".join(m.group(0)[::2] for m in UTF16LE_STR_RE.finditer(raw))
         scan_buffers = (raw, wide_ascii)
-        sample_blobs.append(raw[:4_000_000] + wide_ascii[:4_000_000])
+        sample_blobs.append(raw[:4_000_000] + b"\n" + wide_ascii[:2_000_000])
 
         pe_clr = carve_pe_and_clr_indicators(raw)
         total_pe += pe_clr["pe_headers_count"]
@@ -199,6 +203,11 @@ def carve_memory_buffers(
                 u = m.group(0).decode("ascii", errors="ignore").rstrip(".,;'\")}\\")
                 if not is_benign_or_sandbox_url(u):
                     ips_urls.add(u)
+
+            for m in C2_HOST_PORT_RE.finditer(buf):
+                hp = m.group(0).decode("ascii", errors="ignore")
+                if not is_benign_or_sandbox_url(hp):
+                    ips_urls.add(hp)
 
             for m in IPV4_PORT_RE.finditer(buf):
                 ip_str = m.group(1).decode("ascii", errors="ignore")

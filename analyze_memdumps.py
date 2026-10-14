@@ -30,8 +30,15 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Download VT memdumps into ephemeral storage, carve intelligence, and delete raw dumps."
     )
-    parser.add_argument("--hash", type=str, default=None, help="Single SHA-256 sample hash to analyze")
-    parser.add_argument("--file", type=Path, default=None, help="File containing SHA-256 hashes (one per line)")
+    parser.add_argument(
+        "--hash",
+        "--sha256",
+        dest="hashes",
+        action="append",
+        default=[],
+        help="SHA-256 sample hash to analyze (can be specified multiple times)",
+    )
+    parser.add_argument("--file", "--hashes-file", dest="file", type=Path, default=None, help="File containing SHA-256 hashes (one per line)")
     parser.add_argument("--local-dump", type=Path, default=None, help="Optional local .zip or .dmp file to analyze")
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR, help="Output directory for JSON/MD")
     parser.add_argument("--resolve-ddr", action="store_true", help="Resolve live Pastebin Dead Drop URLs")
@@ -45,8 +52,10 @@ def main(argv: Optional[List[str]] = None) -> int:
         return 1
 
     hashes: List[str] = []
-    if args.hash:
-        hashes.append(args.hash.strip().lower())
+    for raw_h in args.hashes or []:
+        h = raw_h.strip().lower()
+        if SHA256_RE.match(h) and h not in hashes:
+            hashes.append(h)
     if args.file and args.file.is_file():
         for line in args.file.read_text(encoding="utf-8").splitlines():
             h = line.strip().lower()

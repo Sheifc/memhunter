@@ -99,8 +99,15 @@ def download_memdump(
 
 def main(argv: Optional[List[str]] = None) -> int:
     parser = argparse.ArgumentParser(description="Standalone VirusTotal v3 Memdump Downloader.")
-    parser.add_argument("--hash", type=str, default=None, help="Single SHA-256 hash to download memdump for")
-    parser.add_argument("--file", type=Path, default=None, help="File with SHA-256 hashes (one per line)")
+    parser.add_argument(
+        "--hash",
+        "--sha256",
+        dest="hashes",
+        action="append",
+        default=[],
+        help="SHA-256 hash to download memdump for (can be specified multiple times)",
+    )
+    parser.add_argument("--file", "--hashes-file", dest="file", type=Path, default=None, help="File with SHA-256 hashes (one per line)")
     parser.add_argument("--output-dir", type=Path, default=Path("data/memdumps"), help="Destination directory")
     parser.add_argument("--all-sandboxes", action="store_true", help="Download from all sandboxes (default: first)")
     parser.add_argument("--dry-run", action="store_true", help="Only list available memdumps without downloading")
@@ -112,12 +119,14 @@ def main(argv: Optional[List[str]] = None) -> int:
         return 1
 
     hashes: List[str] = []
-    if args.hash:
-        hashes.append(args.hash.strip().lower())
+    for raw_h in args.hashes or []:
+        h = raw_h.strip().lower()
+        if SHA256_RE.match(h) and h not in hashes:
+            hashes.append(h)
     if args.file and args.file.is_file():
         for line in args.file.read_text(encoding="utf-8").splitlines():
             h = line.strip().lower()
-            if SHA256_RE.match(h):
+            if SHA256_RE.match(h) and h not in hashes:
                 hashes.append(h)
 
     if not hashes:
