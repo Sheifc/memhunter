@@ -1,0 +1,118 @@
+{
+  "hash": "4f3c6e816429e6336a61c33ed3753b687b7bc58b4bd5ec78130ee1640976831d",
+  "sha256": "4f3c6e816429e6336a61c33ed3753b687b7bc58b4bd5ec78130ee1640976831d",
+  "analyzed_at": "2026-10-14T22:40:03Z",
+  "family_supposition": "pulsar_rat",
+  "sandbox_sources": [
+    {
+      "sandbox_id": "4f3c6e816429e6336a61c33ed3753b687b7bc58b4bd5ec78130ee1640976831d_CAPE Sandbox",
+      "sandbox_name": "CAPE Sandbox",
+      "has_pcap": true
+    },
+    {
+      "sandbox_id": "4f3c6e816429e6336a61c33ed3753b687b7bc58b4bd5ec78130ee1640976831d_Zenbox",
+      "sandbox_name": "Zenbox",
+      "has_pcap": true
+    }
+  ],
+  "minidump_files": [
+    {
+      "file_name": "5068.dmp",
+      "size_bytes": 57900464,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    },
+    {
+      "file_name": "3128.dmp",
+      "size_bytes": 46562544,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    }
+  ],
+  "pe_clr_summary": {
+    "pe_headers_carved": 26,
+    "dotnet_clr_bsjb_carved": 15
+  },
+  "crypto_intel": {
+    "crypto_algorithms": [
+      "ChaCha20_Salsa20_Sigma",
+      "RC4_SBox_Init",
+      "Windows_CNG_BCryptDecrypt",
+      "Windows_DPAPI_CryptUnprotectData"
+    ],
+    "chromium_master_keys": []
+  },
+  "extracted_c2": {
+    "ips_urls": [
+      {
+        "channel_type": "custom",
+        "value": "https://api.ipify.org/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://ipwho.is/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://www.amyuni.com/downloads/usbmmidd_v2.zip"
+      }
+    ],
+    "webhooks": [],
+    "crypto_wallets": [],
+    "ddr": [],
+    "ftp_activity": [
+      "USER\nConfig",
+      "USER\nHKEY_CLASSES_ROOT",
+      "USER\nHKEY_LOCAL_MACHINE",
+      "USER\nLOCAL_USER",
+      "USER\nMACHINE",
+      "USER\nROAMING_USER"
+    ],
+    "decoded_base64_c2_blobs": [],
+    "rc4_decrypted_c2s": []
+  },
+  "behaviour_intel": {
+    "extracted_c2_json_config": [],
+    "malware_targets": [
+      "Chromium Local State",
+      "Chromium Login Data",
+      "Firefox logins.json"
+    ],
+    "mutexes": [
+      "Global\\BFE_Notify_Event_",
+      "Global\\JTMEeyBm3128",
+      "Global\\JTMEeyBm5068",
+      "Global\\NLS_CodePage_1252_3_2_0_0",
+      "Global\\zrRmur",
+      "Local\\Application",
+      "Local\\BraveSoftware",
+      "Local\\Google",
+      "Local\\Micro",
+      "Local\\Microsoft",
+      "Local\\Programs",
+      "Local\\Temp",
+      "Local\\cd648a93-a09f-45c3-bbbc-5b71914d995b"
+    ],
+    "pdb_paths": []
+  },
+  "sqlite_database_count": 0,
+  "in_memory_strings": [
+    "Global\\BFE_Notify_Event_",
+    "Global\\JTMEeyBm3128",
+    "Global\\JTMEeyBm5068",
+    "Global\\NLS_CodePage_1252_3_2_0_0",
+    "Global\\zrRmur",
+    "Local\\Application",
+    "Local\\BraveSoftware",
+    "Local\\Google",
+    "Local\\Micro",
+    "Local\\Microsoft",
+    "Local\\Programs",
+    "Local\\Temp",
+    "Local\\cd648a93-a09f-45c3-bbbc-5b71914d995b"
+  ]
+}

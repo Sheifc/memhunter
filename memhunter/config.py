@@ -70,6 +70,7 @@ FALSE_POSITIVE_EXACT_IPS = {
     "6.0.0.0",
     "8.8.8.8",
     "8.8.4.4",
+    "49.1.1.1",
 }
 
 # 2. Sandbox hooks, Python runtime docstrings, and benign CA/schema URLs polluting URL/DDR lists

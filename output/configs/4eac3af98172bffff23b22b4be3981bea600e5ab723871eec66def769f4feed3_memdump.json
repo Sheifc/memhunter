@@ -1,0 +1,90 @@
+{
+  "hash": "4eac3af98172bffff23b22b4be3981bea600e5ab723871eec66def769f4feed3",
+  "sha256": "4eac3af98172bffff23b22b4be3981bea600e5ab723871eec66def769f4feed3",
+  "analyzed_at": "2026-10-14T22:42:31Z",
+  "family_supposition": "generic_stealer_or_rat",
+  "sandbox_sources": [
+    {
+      "sandbox_id": "4eac3af98172bffff23b22b4be3981bea600e5ab723871eec66def769f4feed3_CAPE Sandbox",
+      "sandbox_name": "CAPE Sandbox",
+      "has_pcap": true
+    },
+    {
+      "sandbox_id": "4eac3af98172bffff23b22b4be3981bea600e5ab723871eec66def769f4feed3_Zenbox",
+      "sandbox_name": "Zenbox",
+      "has_pcap": true
+    }
+  ],
+  "minidump_files": [
+    {
+      "file_name": "5960.dmp",
+      "size_bytes": 93617536,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    }
+  ],
+  "pe_clr_summary": {
+    "pe_headers_carved": 8,
+    "dotnet_clr_bsjb_carved": 2
+  },
+  "crypto_intel": {
+    "crypto_algorithms": [
+      "ChaCha20_Salsa20_Sigma",
+      "RC4_SBox_Init",
+      "Windows_CNG_BCryptDecrypt",
+      "Windows_DPAPI_CryptUnprotectData"
+    ],
+    "chromium_master_keys": []
+  },
+  "extracted_c2": {
+    "ips_urls": [
+      {
+        "channel_type": "custom",
+        "value": "31.77.12.184"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://ip-api.com/json/"
+      }
+    ],
+    "webhooks": [],
+    "crypto_wallets": [],
+    "ddr": [],
+    "ftp_activity": [
+      "USER\nHKEY_CLASSES_ROOT",
+      "USER\nHKEY_LOCAL_MACHINE"
+    ],
+    "decoded_base64_c2_blobs": [],
+    "rc4_decrypted_c2s": []
+  },
+  "behaviour_intel": {
+    "extracted_c2_json_config": [],
+    "malware_targets": [
+      "Chromium Local State",
+      "Exodus",
+      "MetaMask",
+      "Phantom",
+      "Ronin"
+    ],
+    "mutexes": [
+      "Global\\HFCEgMpv5960",
+      "Global\\vqyxYfsv",
+      "Local\\Micr",
+      "Local\\Microsoft",
+      "Local\\Programs",
+      "Local\\Temp"
+    ],
+    "pdb_paths": []
+  },
+  "sqlite_database_count": 0,
+  "in_memory_strings": [
+    "Global\\HFCEgMpv5960",
+    "Global\\vqyxYfsv",
+    "Local\\Micr",
+    "Local\\Microsoft",
+    "Local\\Programs",
+    "Local\\Temp"
+  ]
+}

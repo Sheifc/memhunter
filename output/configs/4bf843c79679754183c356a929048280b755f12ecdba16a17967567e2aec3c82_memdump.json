@@ -1,7 +1,7 @@
 {
   "hash": "4bf843c79679754183c356a929048280b755f12ecdba16a17967567e2aec3c82",
   "sha256": "4bf843c79679754183c356a929048280b755f12ecdba16a17967567e2aec3c82",
-  "analyzed_at": "2026-10-14T22:37:31Z",
+  "analyzed_at": "2026-10-14T22:39:44Z",
   "family_supposition": "pulsar_rat",
   "sandbox_sources": [
     {
@@ -43,10 +43,6 @@
   },
   "extracted_c2": {
     "ips_urls": [
-      {
-        "channel_type": "custom",
-        "value": "49.1.1.1"
-      },
       {
         "channel_type": "custom",
         "value": "https://api.ipify.org/"

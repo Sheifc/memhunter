@@ -1,0 +1,477 @@
+{
+  "hash": "b8e7fc9e26503651b171a31597fad9e32d93209734f7cc2bdd848129f1906e46",
+  "sha256": "b8e7fc9e26503651b171a31597fad9e32d93209734f7cc2bdd848129f1906e46",
+  "analyzed_at": "2026-10-14T22:42:08Z",
+  "family_supposition": "pulsar_rat",
+  "sandbox_sources": [
+    {
+      "sandbox_id": "b8e7fc9e26503651b171a31597fad9e32d93209734f7cc2bdd848129f1906e46_CAPE Sandbox",
+      "sandbox_name": "CAPE Sandbox",
+      "has_pcap": true
+    }
+  ],
+  "minidump_files": [
+    {
+      "file_name": "4448.dmp",
+      "size_bytes": 39954784,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    },
+    {
+      "file_name": "5272.dmp",
+      "size_bytes": 26442992,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    },
+    {
+      "file_name": "396.dmp",
+      "size_bytes": 31583376,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    },
+    {
+      "file_name": "908.dmp",
+      "size_bytes": 30232008,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    },
+    {
+      "file_name": "5052.dmp",
+      "size_bytes": 30578704,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    },
+    {
+      "file_name": "5744.dmp",
+      "size_bytes": 89688016,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    },
+    {
+      "file_name": "1692.dmp",
+      "size_bytes": 25417960,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    },
+    {
+      "file_name": "2220.dmp",
+      "size_bytes": 26327968,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    },
+    {
+      "file_name": "4580.dmp",
+      "size_bytes": 27379704,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    },
+    {
+      "file_name": "4480.dmp",
+      "size_bytes": 28904424,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    },
+    {
+      "file_name": "4928.dmp",
+      "size_bytes": 29453048,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    }
+  ],
+  "pe_clr_summary": {
+    "pe_headers_carved": 81,
+    "dotnet_clr_bsjb_carved": 52
+  },
+  "crypto_intel": {
+    "crypto_algorithms": [
+      "AES_Rijndael_SBox",
+      "ChaCha20_Salsa20_Sigma",
+      "RC4_SBox_Init",
+      "Windows_CNG_BCryptDecrypt",
+      "Windows_DPAPI_CryptUnprotectData"
+    ],
+    "chromium_master_keys": []
+  },
+  "extracted_c2": {
+    "ips_urls": [
+      {
+        "channel_type": "custom",
+        "value": "168.61.215.74:123"
+      },
+      {
+        "channel_type": "custom",
+        "value": "185.230.162.2"
+      },
+      {
+        "channel_type": "custom",
+        "value": "185.230.162.2:6532"
+      },
+      {
+        "channel_type": "custom",
+        "value": "24.2.0.3"
+      },
+      {
+        "channel_type": "custom",
+        "value": "35.254.228.181"
+      },
+      {
+        "channel_type": "custom",
+        "value": "49.1.1.2"
+      },
+      {
+        "channel_type": "custom",
+        "value": "8.30.54.19"
+      },
+      {
+        "channel_type": "custom",
+        "value": "8.30.56.19"
+      },
+      {
+        "channel_type": "custom",
+        "value": "8.30.59.19"
+      },
+      {
+        "channel_type": "custom",
+        "value": "8.30.61.18"
+      },
+      {
+        "channel_type": "custom",
+        "value": "8.30.63.13"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://cacerts.digicert.com/DigiCertTrustedRootG4.crt0C"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://collations.microsoft.com"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://crl.comodo.net/AAACertificateServices.crl0"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://crl.verisign.com/pca3.crl0"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://crl3.digicert.com/DigiCertTrustedRootG4.crl0"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://ctldl.windowsupdate.com/msdownload/update/v3/static/trustedr/en"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://ctldl.windowsupdate.com/msdownload/update/v3/static/trustedr/en/authrootstl.cab"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://exslt.org/common"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://microsoft.com/wsdl/types/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://microsoft.com0"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://schemas.datacontract.org/2004/07/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://schemas.datacontract.org/2004/07/szajdmddgtufovjaed"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://www.bingmapsportal.com"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://www.microsoft.com"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://appexmapsappupdate.blob.core.windows.net"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://cdn.ipwhois.io/flags/us.svg"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.ditu.live.com/REST/V1/MapControlConfiguration/native/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.ditu.live.com/REST/v1/Imagery/Copyright/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.ditu.live.com/REST/v1/JsonFilter/VenueMaps/data/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.ditu.live.com/REST/v1/Locations"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.ditu.live.com/REST/v1/Routes/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.ditu.live.com/REST/v1/Traffic/Incidents/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.ditu.live.com/mapcontrol/logging.ashx"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.virtualearth.net/REST/v1/Imagery/Copyright/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.virtualearth.net/REST/v1/JsonFilter/VenueMaps/data/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.virtualearth.net/REST/v1/Locations"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.virtualearth.net/REST/v1/Routes/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.virtualearth.net/REST/v1/Routes/Driving"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.virtualearth.net/REST/v1/Routes/Transit"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.virtualearth.net/REST/v1/Routes/Walking"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.virtualearth.net/REST/v1/Traffic/Incidents/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.virtualearth.net/REST/v1/Transit/Schedules/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.virtualearth.net/mapcontrol/logging.ashx"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dev.virtualearth.net/webservices/v1/LoggingService/LoggingService.svc/Log?"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://docs.microsoft.com/dotnet/framework/wcf/diagnostics/tracing/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dynamic.api.tiles.ditu.live.com/odvs/gd?pv=1&r="
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dynamic.api.tiles.ditu.live.com/odvs/gdi?pv=1&r="
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dynamic.api.tiles.ditu.live.com/odvs/gdv?pv=1&r="
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dynamic.t"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://dynamic.t0.tiles.ditu.live.com/comp/gen.ashx"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://ecn.dev.virtualearth.net/REST/v1/Imagery/Copyright/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://github.com/dotnet/corefx/tree/32b491939fbd125f304031c35038b1e14b4e3958"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://github.com/dotnet/corefx/tree/7601f4f6225089ffb291dc7d58293c7bbf5c5d4f"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://github.com/dotnet/runtime"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://github.com/protobuf-net/protobuf-net"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://ipwho.is"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://ipwho.is/"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://ipwhois.io/docs"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://protobuf-net.github.io/protobuf-net/contract_first"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://stackoverflow.com/q/11564914/23354"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://stackoverflow.com/q/2152978/23354"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://t0.ssl.ak.dynamic.tiles.virtualearth.net/odvs/gd?pv=1&r="
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://t0.ssl.ak.dynamic.tiles.virtualearth.net/odvs/gdi?pv=1&r="
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://t0.ssl.ak.dynamic.tiles.virtualearth.net/odvs/gri?pv=1&r="
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://t0.ssl.ak.tiles.virtualearth.net/tiles/gen"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://t0.tiles.ditu.live.com/tiles/gen"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://tiles.virtualearth.net/tiles/cmd/StreetSideBubbleMetaData?north="
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://www.verisign.com/CPS04"
+      }
+    ],
+    "webhooks": [],
+    "crypto_wallets": [],
+    "ddr": [],
+    "ftp_activity": [
+      "USER\nConfig",
+      "USER\nHKEY_CLASSES_ROOT",
+      "USER\nHKEY_LOCAL_MACHINE",
+      "USER\nLOCAL_USER",
+      "USER\nMACHINE",
+      "USER\nROAMING_USER"
+    ],
+    "decoded_base64_c2_blobs": [],
+    "rc4_decrypted_c2s": []
+  },
+  "behaviour_intel": {
+    "extracted_c2_json_config": [],
+    "malware_targets": [
+      "Phantom"
+    ],
+    "mutexes": [
+      "Global\\OneSettingQueryMutex",
+      "Global\\UFH_",
+      "Global\\axYH",
+      "Global\\axYrSMzox",
+      "Global\\tATOnDf1692",
+      "Global\\tATOnDf2220",
+      "Global\\tATOnDf396",
+      "Global\\tATOnDf4448",
+      "Global\\tATOnDf4480",
+      "Global\\tATOnDf4580",
+      "Global\\tATOnDf4928",
+      "Global\\tATOnDf5052",
+      "Global\\tATOnDf5272",
+      "Global\\tATOnDf5744",
+      "Global\\tATOnDf908",
+      "Local\\Micro",
+      "Local\\Micros",
+      "Local\\Microso",
+      "Local\\Microsoft",
+      "Local\\Packages",
+      "Local\\Programs",
+      "Local\\Temp",
+      "Local\\packages"
+    ],
+    "pdb_paths": [
+      "D:\\Andrew\\AForge.NET\\trunk\\Sources\\Video.DirectShow\\obj\\Release\\AForge.Video.DirectShow.pdb",
+      "D:\\a\\_work\\1\\s\\artifacts\\obj\\System.Runtime.CompilerServices.Unsafe\\Release\\net462\\System.Runtime.CompilerServices.Unsafe.pdb",
+      "D:\\a\\_work\\1\\s\\corefx\\bin\\obj\\AnyOS.AnyCPU.Release\\System.Memory\\netfx\\System.Memory.pdb",
+      "E:\\A\\_work\\156\\s\\corefx\\bin\\obj\\AnyOS.AnyCPU.Release\\System.Buffers\\netfx\\System.Buffers.pdb"
+    ]
+  },
+  "sqlite_database_count": 0,
+  "in_memory_strings": [
+    "D:\\Andrew\\AForge.NET\\trunk\\Sources\\Video.DirectShow\\obj\\Release\\AForge.Video.DirectShow.pdb",
+    "D:\\a\\_work\\1\\s\\artifacts\\obj\\System.Runtime.CompilerServices.Unsafe\\Release\\net462\\System.Runtime.CompilerServices.Unsafe.pdb",
+    "D:\\a\\_work\\1\\s\\corefx\\bin\\obj\\AnyOS.AnyCPU.Release\\System.Memory\\netfx\\System.Memory.pdb",
+    "E:\\A\\_work\\156\\s\\corefx\\bin\\obj\\AnyOS.AnyCPU.Release\\System.Buffers\\netfx\\System.Buffers.pdb",
+    "Global\\OneSettingQueryMutex",
+    "Global\\UFH_",
+    "Global\\axYH",
+    "Global\\axYrSMzox",
+    "Global\\tATOnDf1692",
+    "Global\\tATOnDf2220",
+    "Global\\tATOnDf396",
+    "Global\\tATOnDf4448",
+    "Global\\tATOnDf4480",
+    "Global\\tATOnDf4580",
+    "Global\\tATOnDf4928",
+    "Global\\tATOnDf5052",
+    "Global\\tATOnDf5272",
+    "Global\\tATOnDf5744",
+    "Global\\tATOnDf908",
+    "Local\\Micro",
+    "Local\\Micros",
+    "Local\\Microso",
+    "Local\\Microsoft",
+    "Local\\Packages",
+    "Local\\Programs",
+    "Local\\Temp",
+    "Local\\packages"
+  ]
+}

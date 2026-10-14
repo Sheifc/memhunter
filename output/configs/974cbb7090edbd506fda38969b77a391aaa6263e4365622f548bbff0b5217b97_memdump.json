@@ -1,0 +1,89 @@
+{
+  "hash": "974cbb7090edbd506fda38969b77a391aaa6263e4365622f548bbff0b5217b97",
+  "sha256": "974cbb7090edbd506fda38969b77a391aaa6263e4365622f548bbff0b5217b97",
+  "analyzed_at": "2026-10-14T22:42:49Z",
+  "family_supposition": "generic_stealer_or_rat",
+  "sandbox_sources": [
+    {
+      "sandbox_id": "974cbb7090edbd506fda38969b77a391aaa6263e4365622f548bbff0b5217b97_CAPE Sandbox",
+      "sandbox_name": "CAPE Sandbox",
+      "has_pcap": true
+    },
+    {
+      "sandbox_id": "974cbb7090edbd506fda38969b77a391aaa6263e4365622f548bbff0b5217b97_Zenbox",
+      "sandbox_name": "Zenbox",
+      "has_pcap": true
+    }
+  ],
+  "minidump_files": [
+    {
+      "file_name": "6680.dmp",
+      "size_bytes": 106643168,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    }
+  ],
+  "pe_clr_summary": {
+    "pe_headers_carved": 6,
+    "dotnet_clr_bsjb_carved": 2
+  },
+  "crypto_intel": {
+    "crypto_algorithms": [
+      "ChaCha20_Salsa20_Sigma",
+      "RC4_SBox_Init",
+      "Windows_CNG_BCryptDecrypt",
+      "Windows_DPAPI_CryptUnprotectData"
+    ],
+    "chromium_master_keys": []
+  },
+  "extracted_c2": {
+    "ips_urls": [
+      {
+        "channel_type": "custom",
+        "value": "150.241.66.67"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://ip-api.com/json/"
+      }
+    ],
+    "webhooks": [],
+    "crypto_wallets": [],
+    "ddr": [],
+    "ftp_activity": [
+      "USER\nHKEY_LOCAL_MACHINE"
+    ],
+    "decoded_base64_c2_blobs": [],
+    "rc4_decrypted_c2s": []
+  },
+  "behaviour_intel": {
+    "extracted_c2_json_config": [],
+    "malware_targets": [
+      "Chromium Local State",
+      "Exodus",
+      "MetaMask",
+      "Phantom",
+      "Ronin"
+    ],
+    "mutexes": [
+      "Global\\CLR_PerfMon_StartEnumEvent",
+      "Global\\lxGtqvRzw",
+      "Global\\tTPNrJGbF6680",
+      "Local\\Microsoft",
+      "Local\\Programs",
+      "Local\\Temp"
+    ],
+    "pdb_paths": []
+  },
+  "sqlite_database_count": 0,
+  "in_memory_strings": [
+    "Global\\CLR_PerfMon_StartEnumEvent",
+    "Global\\lxGtqvRzw",
+    "Global\\tTPNrJGbF6680",
+    "Local\\Microsoft",
+    "Local\\Programs",
+    "Local\\Temp"
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "hash": "e874fb62aa885ba11f23a8c78ec975b137ac29bf46c5a29900314af9fcc3ab5b",
   "sha256": "e874fb62aa885ba11f23a8c78ec975b137ac29bf46c5a29900314af9fcc3ab5b",
-  "analyzed_at": "2026-10-14T22:37:12Z",
+  "analyzed_at": "2026-10-14T22:39:07Z",
   "family_supposition": "dcrat",
   "sandbox_sources": [
     {
@@ -47,10 +47,6 @@
       {
         "channel_type": "custom",
         "value": "172.66.171.73"
-      },
-      {
-        "channel_type": "custom",
-        "value": "49.1.1.1"
       },
       {
         "channel_type": "custom",
