@@ -1,0 +1,277 @@
+"""
+memhunter/carvers/artifacts.py
+High-signal RAM artifact carver for infostealers and RATs:
+- Decrypted C2 JSON configurations (Lumma, Stealc, Raccoon)
+- Discord Webhooks & Telegram Bot tokens/channels
+- Ethereum & Bitcoin clipper wallets
+- Dead Drop Resolvers (Pastebin, Steam, Telegram) with optional live resolution
+- SQLite3 databases & Chromium v10/v20/DPAPI master keys
+- Deterministic family attribution (family_supposition)
+"""
+
+from __future__ import annotations
+
+import json
+import re
+from pathlib import Path
+from typing import Any, Dict, List, Set
+
+import requests
+
+from memhunter.carvers.minidump import carve_pe_and_clr_indicators, detect_crypto_primitives
+from memhunter.config import (
+    is_benign_or_sandbox_url,
+    is_valid_ftp_indicator,
+    is_valid_public_c2_ip,
+)
+
+IPV4_PORT_RE = re.compile(rb"\b((?:\d{1,3}\.){3}\d{1,3})(?::(\d{2,5}))?\b")
+URL_RE = re.compile(rb"https?://[a-zA-Z0-9._~:/?#\[\]@!$&'()*+,;=%-]{8,220}")
+DISCORD_WEBHOOK_RE = re.compile(
+    rb"https?://(?:ptb\.|canary\.)?discord(?:app)?\.com/api/webhooks/\d{15,22}/[A-Za-z0-9_-]{50,80}"
+)
+TELEGRAM_BOT_RE = re.compile(rb"https?://api\.telegram\.org/bot\d{7,12}:[A-Za-z0-9_-]{30,45}")
+TELEGRAM_CHAN_RE = re.compile(rb"https?://(?:t\.me|telegram\.me)/[A-Za-z0-9_]{4,64}")
+PASTEBIN_RAW_RE = re.compile(rb"https?://pastebin\.com/raw/[A-Za-z0-9]{6,12}")
+STEAM_PROFILE_RE = re.compile(rb"https?://steamcommunity\.com/(?:profiles/\d{15,20}|id/[A-Za-z0-9_-]{3,40})")
+
+ETH_WALLET_RE = re.compile(rb"\b0x[a-fA-F0-9]{40}\b")
+BTC_BECH32_RE = re.compile(rb"\bbc1q[ac-hj-np-z02-9]{38,58}\b")
+BTC_LEGACY_RE = re.compile(rb"\b[13][a-km-zA-HJ-NP-Z1-9]{25,34}\b")
+
+PDB_PATH_RE = re.compile(rb"[A-Za-z]:\\[\x20-\x7e]{4,160}\.pdb", re.IGNORECASE)
+MUTEX_RE = re.compile(rb"(?:Global\\|Local\\|DcRatMutex_)[A-Za-z0-9_.-]{4,64}")
+JSON_CONFIG_RE = re.compile(
+    rb"\{[^{}]{10,650}(?:\"grabber_size_max\"|\"steal_discord\"|\"cryptocurrency\"|\"ldb\"\s*:)[^{}]{2,650}\}"
+)
+FTP_CMD_RE = re.compile(rb"(?:ftp://[^\s\"'<>]{6,120}|USER\s+[A-Za-z0-9_.@-]{3,48})")
+
+STEALER_TARGETS = {
+    b"Exodus": "Exodus",
+    b"MetaMask": "MetaMask",
+    b"Phantom": "Phantom",
+    b"Ronin": "Ronin",
+    b"TronLink": "TronLink",
+    b"Trust Wallet": "Trust Wallet",
+    b"FileZilla": "FileZilla",
+    b"WinSCP": "WinSCP",
+    b"Login Data": "Chromium Login Data",
+    b"Local State": "Chromium Local State",
+    b"logins.json": "Firefox logins.json",
+    b"discord.com/api/v": "Discord API",
+}
+
+
+def resolve_dead_drop_url(url: str, timeout: int = 8) -> str | None:
+    """Optionally resolve a live Pastebin raw Dead Drop URL to its C2 payload."""
+    if "pastebin.com/raw/" not in url:
+        return None
+    try:
+        resp = requests.get(url, timeout=timeout, headers={"User-Agent": "Mozilla/5.0"})
+        if resp.status_code == 200 and resp.text.strip():
+            return resp.text.strip()[:160]
+    except Exception:
+        return None
+    return None
+
+
+def classify_family_from_memory(
+    raw_blobs: List[bytes],
+    pdb_paths: List[str],
+    mutexes: List[str],
+    json_configs: List[Dict[str, Any]],
+    urls: List[str],
+    webhooks: List[str],
+    wallets: List[str],
+) -> str:
+    """
+    Deterministic malware family classifier preventing the legacy 100% 'unknown' problem.
+    """
+    joined_pdb = " ".join(pdb_paths).lower()
+    joined_mtx = " ".join(mutexes).lower()
+    joined_urls = " ".join(urls).lower()
+
+    for blob in raw_blobs:
+        if b"Pulsar.Common" in blob or b"PulsarClient" in blob or b"Quasar.Common" in blob:
+            return "pulsar_rat"
+        if b"DcRat" in blob or b"DcRatByqwqdanchun" in blob or "dcratmutex" in joined_mtx:
+            return "dcrat"
+        if "newraton" in joined_pdb or "commands.pdb" in joined_pdb or b"clientForCrypters" in blob:
+            return "raton_rat"
+        if b"IRemoteEndpoint" in blob or b"DownloadAndExecuteUpdate" in blob:
+            return "redline_stealer"
+        if b"AsyncClient" in blob or b"AsyncMutex" in blob:
+            return "asyncrat"
+        if b"Umbral" in blob or (b"billing/payment-sources" in blob and b"outbound-promotions/codes" in blob):
+            return "umbral_stealer"
+        if b"Stealerium" in blob or (b"api.gofile.io/servers" in blob and b"api.telegram.org/bot" in blob):
+            return "stealerium"
+        if b"1477" in blob and b"Grabber" in blob:
+            return "1477_grabber"
+        if b"njRAT" in blob or b"njq8" in blob:
+            return "njrat"
+        if b"WUpdateSvc" in blob or b"MSNetUpdater.exe" in blob:
+            return "wupdatesvc_rat"
+
+    if json_configs:
+        for cfg in json_configs:
+            if "grabber_size_max" in cfg and "token" in cfg:
+                return "lumma_or_stealc"
+            if "ldb" in cfg and "path" in cfg:
+                return "chromium_ldb_stealer"
+
+    if len(wallets) >= 2 and ("stealer.pdb" in joined_pdb or not urls):
+        return "cryptocurrency_clipper"
+    if webhooks:
+        return "discord_webhook_stealer"
+    if "niceports.shop" in joined_urls:
+        return "pulsar_rat"
+    return "generic_stealer_or_rat"
+
+
+def carve_memory_buffers(
+    dump_paths: List[Path],
+    resolve_ddr: bool = False,
+) -> Dict[str, Any]:
+    """
+    Scan one or more .dmp files and extract filtered C2s, JSON configs, webhooks,
+    wallets, DDRs, SQLite/DPAPI indicators, and family attribution.
+    """
+    ips_urls: Set[str] = set()
+    webhooks: Set[str] = set()
+    ddr_urls: Set[str] = set()
+    wallets: Set[str] = set()
+    ftp_items: Set[str] = set()
+    pdb_paths: Set[str] = set()
+    mutexes: Set[str] = set()
+    targets: Set[str] = set()
+    crypto_primitives: Set[str] = set()
+    json_configs: List[Dict[str, Any]] = []
+    chromium_keys: List[str] = []
+    sqlite_hits = 0
+    total_pe = 0
+    total_clr = 0
+    sample_blobs: List[bytes] = []
+
+    for dmp_path in dump_paths:
+        raw = dmp_path.read_bytes()
+        # Also normalize UTF-16LE ASCII sequences so wide-char strings in .NET / Win32 heaps are carved
+        wide_ascii = raw.replace(b"\x00", b"")
+        scan_buffers = (raw, wide_ascii)
+        sample_blobs.append(raw[:4_000_000] + wide_ascii[:4_000_000])
+
+        pe_clr = carve_pe_and_clr_indicators(raw)
+        total_pe += pe_clr["pe_headers_count"]
+        total_clr += pe_clr["dotnet_clr_bsjb_count"]
+
+        for prim in detect_crypto_primitives(raw):
+            crypto_primitives.add(prim)
+
+        sqlite_hits += raw.count(b"SQLite format 3\x00")
+        if b"os_crypt" in raw or b"encrypted_key" in raw:
+            chromium_keys.append("os_crypt_encrypted_key_present")
+
+        for marker, label in STEALER_TARGETS.items():
+            if marker in raw or marker in wide_ascii:
+                targets.add(label)
+
+        for buf in scan_buffers:
+            for m in DISCORD_WEBHOOK_RE.finditer(buf):
+                webhooks.add(m.group(0).decode("ascii", errors="ignore"))
+            for m in TELEGRAM_BOT_RE.finditer(buf):
+                webhooks.add(m.group(0).decode("ascii", errors="ignore"))
+
+            for m in PASTEBIN_RAW_RE.finditer(buf):
+                ddr_urls.add(m.group(0).decode("ascii", errors="ignore"))
+            for m in STEAM_PROFILE_RE.finditer(buf):
+                ddr_urls.add(m.group(0).decode("ascii", errors="ignore"))
+            for m in TELEGRAM_CHAN_RE.finditer(buf):
+                ddr_urls.add(m.group(0).decode("ascii", errors="ignore"))
+
+            for m in URL_RE.finditer(buf):
+                u = m.group(0).decode("ascii", errors="ignore").rstrip(".,;'\")}\\")
+                if not is_benign_or_sandbox_url(u):
+                    ips_urls.add(u)
+
+            for m in IPV4_PORT_RE.finditer(buf):
+                ip_str = m.group(1).decode("ascii", errors="ignore")
+                port_bytes = m.group(2)
+                if is_valid_public_c2_ip(ip_str):
+                    if port_bytes:
+                        ips_urls.add(f"{ip_str}:{port_bytes.decode('ascii')}")
+                    else:
+                        ips_urls.add(ip_str)
+
+            for m in ETH_WALLET_RE.finditer(buf):
+                w = m.group(0).decode("ascii")
+                if len(set(w[2:].lower())) >= 6:
+                    wallets.add(f"ETH:{w}")
+            for m in BTC_BECH32_RE.finditer(buf):
+                wallets.add(f"BTC:{m.group(0).decode('ascii')}")
+
+            for m in PDB_PATH_RE.finditer(buf):
+                pdb_paths.add(m.group(0).decode("ascii", errors="ignore"))
+            for m in MUTEX_RE.finditer(buf):
+                mutexes.add(m.group(0).decode("ascii", errors="ignore"))
+
+            for m in JSON_CONFIG_RE.finditer(buf):
+                candidate = m.group(0).decode("utf-8", errors="ignore")
+                try:
+                    parsed = json.loads(candidate)
+                    if isinstance(parsed, dict) and parsed not in json_configs:
+                        json_configs.append(parsed)
+                except Exception:
+                    continue
+
+            for m in FTP_CMD_RE.finditer(buf):
+                ftp_str = m.group(0).decode("ascii", errors="ignore")
+                if is_valid_ftp_indicator(ftp_str):
+                    ftp_items.add(ftp_str)
+
+    ddr_entries: List[Dict[str, Any]] = []
+    for durl in sorted(ddr_urls):
+        if is_benign_or_sandbox_url(durl):
+            continue
+        entry: Dict[str, Any] = {"channel_type": "ddr", "value": durl}
+        if resolve_ddr:
+            resolved = resolve_dead_drop_url(durl)
+            if resolved:
+                entry["resolved_c2"] = resolved
+        ddr_entries.append(entry)
+
+    family = classify_family_from_memory(
+        raw_blobs=sample_blobs,
+        pdb_paths=sorted(pdb_paths),
+        mutexes=sorted(mutexes),
+        json_configs=json_configs,
+        urls=sorted(ips_urls),
+        webhooks=sorted(webhooks),
+        wallets=sorted(wallets),
+    )
+
+    return {
+        "family_supposition": family,
+        "pe_clr_summary": {
+            "pe_headers_carved": total_pe,
+            "dotnet_clr_bsjb_carved": total_clr,
+        },
+        "crypto_intel": {
+            "crypto_algorithms": sorted(crypto_primitives),
+            "chromium_master_keys": sorted(set(chromium_keys)),
+        },
+        "extracted_c2": {
+            "ips_urls": [{"channel_type": "custom", "value": v} for v in sorted(ips_urls)[:100]],
+            "webhooks": [{"channel_type": "webhook", "value": w} for w in sorted(webhooks)],
+            "crypto_wallets": sorted(wallets)[:50],
+            "ddr": ddr_entries,
+            "ftp_activity": sorted(ftp_items)[:25],
+        },
+        "behaviour_intel": {
+            "extracted_c2_json_config": json_configs[:10],
+            "malware_targets": sorted(targets),
+            "mutexes": sorted(mutexes)[:50],
+            "pdb_paths": sorted(pdb_paths)[:25],
+        },
+        "sqlite_database_count": sqlite_hits,
+        "in_memory_strings": sorted(list(webhooks) + list(ddr_urls) + list(pdb_paths) + list(mutexes))[:100],
+    }
