@@ -1,6 +1,6 @@
 """
 memhunter/reporting.py
-Deterministic JSON and Markdown report builders for memory forensics findings.
+Deterministic JSON and Markdown report builders for memory forensics C2 findings.
 """
 
 from __future__ import annotations
@@ -38,7 +38,6 @@ def build_memdump_json_report(
         "behaviour_intel": carved.get("behaviour_intel", {}),
         "sqlite_database_count": carved.get("sqlite_database_count", 0),
         "in_memory_strings": carved.get("in_memory_strings", []),
-        "kinetic_forensics": carved.get("kinetic_forensics", {}),
     }
 
 
@@ -53,7 +52,7 @@ def build_memdump_markdown_report(report: Dict[str, Any]) -> str:
     crypto = report.get("crypto_intel", {})
 
     lines = [
-        f"# Memory Dump Forensic Report: `{sha256[:16]}...`",
+        f"# Memory Dump Forensic Report: `{sha256}`",
         "",
         "## 1. Executive Summary",
         f"- **SHA-256**: `{sha256}`",
@@ -70,6 +69,8 @@ def build_memdump_markdown_report(report: Dict[str, Any]) -> str:
     ddrs = c2.get("ddr", [])
     wallets = c2.get("crypto_wallets", [])
     ips_urls = [x.get("value") for x in c2.get("ips_urls", [])]
+    b64_blobs = c2.get("decoded_base64_c2_blobs", [])
+    rc4_c2s = c2.get("rc4_decrypted_c2s", [])
 
     lines.append(f"- **Discord / Telegram Webhooks ({len(webhooks)})**:")
     for w in webhooks[:15]:
@@ -81,9 +82,17 @@ def build_memdump_markdown_report(report: Dict[str, Any]) -> str:
     lines.append(f"- **Validated Clipper Wallets ({len(wallets)})**:")
     for w in wallets[:15]:
         lines.append(f"  - `{w}`")
-    lines.append(f"- **Filtered Public C2 IPs / URLs ({len(ips_urls)})**:")
+    lines.append(f"- **Filtered Public C2 IPs / URLs / WCF / WebSockets / .onion ({len(ips_urls)})**:")
     for u in ips_urls[:25]:
         lines.append(f"  - `{u}`")
+    if b64_blobs:
+        lines.append(f"- **Base64-Decoded In-Memory C2 Payloads ({len(b64_blobs)})**:")
+        for b in b64_blobs[:10]:
+            lines.append(f"  - `{b}`")
+    if rc4_c2s:
+        lines.append(f"- **RC4 Heap-Decrypted C2 Payloads ({len(rc4_c2s)})**:")
+        for r in rc4_c2s[:10]:
+            lines.append(f"  - Key `{r.get('key')}` @ `0x{r.get('offset', 0):X}` -> `{r.get('decrypted_c2_preview')}`")
 
     lines.extend(
         [

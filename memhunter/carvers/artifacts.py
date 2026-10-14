@@ -18,6 +18,11 @@ from typing import Any, Dict, List, Set
 
 import requests
 
+from memhunter.carvers.c2_deobfuscator import (
+    carve_extended_c2_protocols,
+    decode_base64_c2_blobs,
+    solve_rc4_encrypted_c2s,
+)
 from memhunter.carvers.minidump import carve_pe_and_clr_indicators, detect_crypto_primitives
 from memhunter.config import (
     is_benign_or_sandbox_url,
@@ -147,6 +152,8 @@ def carve_memory_buffers(
     targets: Set[str] = set()
     crypto_primitives: Set[str] = set()
     json_configs: List[Dict[str, Any]] = []
+    decoded_c2_blobs: List[str] = []
+    rc4_decrypted_c2s: List[Dict[str, Any]] = []
     chromium_keys: List[str] = []
     sqlite_hits = 0
     total_pe = 0
@@ -228,6 +235,23 @@ def carve_memory_buffers(
                 if is_valid_ftp_indicator(ftp_str):
                     ftp_items.add(ftp_str)
 
+            ext = carve_extended_c2_protocols(buf)
+            for ep in ext["extended_c2_endpoints"]:
+                ips_urls.add(ep)
+            for ddr in ext["extended_ddrs"]:
+                ddr_urls.add(ddr)
+
+            b64_res = decode_base64_c2_blobs(buf)
+            for u in b64_res["decoded_c2_urls"]:
+                ips_urls.add(u)
+            for blob_str in b64_res["decoded_c2_blobs"]:
+                if blob_str not in decoded_c2_blobs and len(decoded_c2_blobs) < 25:
+                    decoded_c2_blobs.append(blob_str)
+
+        for rc4_hit in solve_rc4_encrypted_c2s(raw):
+            if rc4_hit not in rc4_decrypted_c2s and len(rc4_decrypted_c2s) < 15:
+                rc4_decrypted_c2s.append(rc4_hit)
+
     ddr_entries: List[Dict[str, Any]] = []
     for durl in sorted(ddr_urls):
         if is_benign_or_sandbox_url(durl):
@@ -265,6 +289,8 @@ def carve_memory_buffers(
             "crypto_wallets": sorted(wallets)[:50],
             "ddr": ddr_entries,
             "ftp_activity": sorted(ftp_items)[:25],
+            "decoded_base64_c2_blobs": decoded_c2_blobs,
+            "rc4_decrypted_c2s": rc4_decrypted_c2s,
         },
         "behaviour_intel": {
             "extracted_c2_json_config": json_configs[:10],

@@ -1,6 +1,6 @@
 """
 memhunter/service.py
-Stateless orchestrator implementing the Download -> Carve (memhunter + kinetic_memhunter) -> Delete -> Report lifecycle.
+Stateless orchestrator implementing the Download -> Carve -> Delete -> Report lifecycle.
 """
 
 from __future__ import annotations
@@ -9,64 +9,14 @@ import logging
 from pathlib import Path
 from typing import Any, Dict, List
 
-from kinetic_memhunter.analyzer import MemoryAnalyzer
 from memhunter.carvers.artifacts import carve_memory_buffers
 from memhunter.carvers.minidump import inspect_dump_file
-from memhunter.config import (
-    DEFAULT_BASE_URL,
-    DEFAULT_OUTPUT_DIR,
-    DEFAULT_TMP_DIR,
-    is_benign_or_sandbox_url,
-)
+from memhunter.config import DEFAULT_BASE_URL, DEFAULT_OUTPUT_DIR, DEFAULT_TMP_DIR
 from memhunter.downloader import download_behaviour_memdump_zip, list_memdump_behaviours
 from memhunter.reporting import build_memdump_json_report, save_memdump_outputs
 from memhunter.workspace import EphemeralDumpWorkspace
 
 logger = logging.getLogger("memhunter.service")
-
-
-def _extract_kinetic_summary(kinetic_report: Any) -> Dict[str, Any]:
-    """Serialize deep kinetic_memhunter SampleAnalysisReport into a clean dict."""
-    clean_c2s = [
-        c for c in getattr(kinetic_report, "all_c2_endpoints", [])
-        if not is_benign_or_sandbox_url(str(c))
-    ]
-    creds = []
-    for c in getattr(kinetic_report, "all_credentials", [])[:50]:
-        creds.append(
-            {
-                "category": getattr(c.category, "value", str(c.category)),
-                "platform": c.platform,
-                "value": c.match_value[:160],
-                "confidence": c.confidence,
-            }
-        )
-    sql_dbs = []
-    for s in getattr(kinetic_report, "all_sqlite_databases", [])[:25]:
-        sql_dbs.append(
-            {
-                "offset": getattr(s, "offset", 0),
-                "page_size": getattr(s, "page_size", 0),
-                "tables": getattr(s, "tables_detected", []),
-            }
-        )
-    attr = getattr(kinetic_report, "family_attribution", None)
-    return {
-        "threat_verdict": getattr(kinetic_report, "threat_verdict", "UNKNOWN"),
-        "threat_score": getattr(kinetic_report, "threat_score", 0),
-        "kinetic_family": getattr(attr, "family_name", "Unknown") if attr else "Unknown",
-        "kinetic_confidence": getattr(attr, "confidence_score", 0.0) if attr else 0.0,
-        "mitre_techniques": getattr(kinetic_report, "mitre_techniques", []),
-        "anti_analysis": getattr(kinetic_report, "all_anti_analysis", []),
-        "persistence": getattr(kinetic_report, "all_persistence", []),
-        "com_clsids": getattr(kinetic_report, "all_clsids", []),
-        "api_hashing": getattr(kinetic_report, "all_api_hashing", [])[:25],
-        "dga_alphabets": getattr(kinetic_report, "all_dga_alphabets", [])[:25],
-        "credentials": creds,
-        "sqlite_databases": sql_dbs,
-        "crypto_primitives": getattr(kinetic_report, "all_crypto_primitives", []),
-        "c2_endpoints": clean_c2s[:100],
-    }
 
 
 def analyze_sample_memdump(
@@ -79,9 +29,10 @@ def analyze_sample_memdump(
     local_zip_or_dmp: Path | None = None,
 ) -> Dict[str, Any]:
     """
-    Download all available sandbox memory dumps for sha256 into an ephemeral workspace,
-    carve C2s/configs/artifacts with both memhunter and kinetic_memhunter engines,
-    automatically delete all .zip/.dmp files on exit, and persist JSON + Markdown reports.
+    Download all available sandbox memory dumps for `sha256` into an ephemeral workspace,
+    carve C2s/configs/artifacts (including Base64-encoded C2 blobs, extended protocols,
+    and RC4 heap-decrypted C2s), automatically delete all .zip/.dmp files on exit,
+    and persist the structured JSON + Markdown reports in `output_dir`.
     """
     clean_sha = sha256.lower().strip()
     sandbox_sources: List[Dict[str, Any]] = []
@@ -127,19 +78,6 @@ def analyze_sample_memdump(
             dump_inspections.append(inspect_dump_file(dmp))
 
         carved = carve_memory_buffers(extracted_dumps, resolve_ddr=resolve_ddr)
-
-        kinetic_analyzer = MemoryAnalyzer()
-        kinetic_rep = kinetic_analyzer.analyze_sample_dumps(
-            [p for p in extracted_dumps if p.stat().st_size <= 250 * 1024 * 1024],
-            sample_hash=clean_sha,
-        )
-        carved["kinetic_forensics"] = _extract_kinetic_summary(kinetic_rep)
-
-        if (
-            carved.get("family_supposition") in (None, "unknown", "generic_stealer_or_rat")
-            and carved["kinetic_forensics"]["kinetic_family"] not in ("Unknown", "Generic Stealer")
-        ):
-            carved["family_supposition"] = carved["kinetic_forensics"]["kinetic_family"].lower().replace(" ", "_")
 
         for dmp in extracted_dumps:
             if ws.work_dir in dmp.parents:
