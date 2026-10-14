@@ -1,0 +1,114 @@
+{
+  "hash": "e874fb62aa885ba11f23a8c78ec975b137ac29bf46c5a29900314af9fcc3ab5b",
+  "sha256": "e874fb62aa885ba11f23a8c78ec975b137ac29bf46c5a29900314af9fcc3ab5b",
+  "analyzed_at": "2026-10-14T22:37:12Z",
+  "family_supposition": "dcrat",
+  "sandbox_sources": [
+    {
+      "sandbox_id": "e874fb62aa885ba11f23a8c78ec975b137ac29bf46c5a29900314af9fcc3ab5b_CAPE Sandbox",
+      "sandbox_name": "CAPE Sandbox",
+      "has_pcap": true
+    },
+    {
+      "sandbox_id": "e874fb62aa885ba11f23a8c78ec975b137ac29bf46c5a29900314af9fcc3ab5b_Zenbox",
+      "sandbox_name": "Zenbox",
+      "has_pcap": true
+    }
+  ],
+  "minidump_files": [
+    {
+      "file_name": "2744.dmp",
+      "size_bytes": 75166584,
+      "minidump": {
+        "is_minidump": false,
+        "streams": []
+      }
+    }
+  ],
+  "pe_clr_summary": {
+    "pe_headers_carved": 8,
+    "dotnet_clr_bsjb_carved": 6
+  },
+  "crypto_intel": {
+    "crypto_algorithms": [
+      "ChaCha20_Salsa20_Sigma",
+      "RC4_SBox_Init",
+      "Windows_CNG_BCryptDecrypt",
+      "Windows_DPAPI_CryptUnprotectData"
+    ],
+    "chromium_master_keys": []
+  },
+  "extracted_c2": {
+    "ips_urls": [
+      {
+        "channel_type": "custom",
+        "value": "104.20.29.150"
+      },
+      {
+        "channel_type": "custom",
+        "value": "172.66.171.73"
+      },
+      {
+        "channel_type": "custom",
+        "value": "49.1.1.1"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://go.microsoft.c"
+      },
+      {
+        "channel_type": "custom",
+        "value": "http://pastebin.com"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://pastebin.com"
+      },
+      {
+        "channel_type": "custom",
+        "value": "https://pastebin.com/raw/rACMKa5f"
+      }
+    ],
+    "webhooks": [],
+    "crypto_wallets": [],
+    "ddr": [
+      {
+        "channel_type": "ddr",
+        "value": "https://pastebin.com/raw/rACMKa5f"
+      }
+    ],
+    "ftp_activity": [
+      "USER\nConfig",
+      "USER\nHKEY_CLASSES_ROOT",
+      "USER\nHKEY_LOCAL_MACHINE",
+      "USER\nLOCAL_USER",
+      "USER\nMACHINE",
+      "USER\nROAMING_USER"
+    ],
+    "decoded_base64_c2_blobs": [],
+    "rc4_decrypted_c2s": []
+  },
+  "behaviour_intel": {
+    "extracted_c2_json_config": [],
+    "malware_targets": [],
+    "mutexes": [
+      "DcRatMutex_qwqdanchun",
+      "Global\\rrkXRsLCmp",
+      "Global\\xXHnVsSIcf2744",
+      "Local\\Microsoft",
+      "Local\\Programs",
+      "Local\\Temp"
+    ],
+    "pdb_paths": []
+  },
+  "sqlite_database_count": 0,
+  "in_memory_strings": [
+    "DcRatMutex_qwqdanchun",
+    "Global\\rrkXRsLCmp",
+    "Global\\xXHnVsSIcf2744",
+    "Local\\Microsoft",
+    "Local\\Programs",
+    "Local\\Temp",
+    "https://pastebin.com/raw/rACMKa5f"
+  ]
+}

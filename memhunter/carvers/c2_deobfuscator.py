@@ -1,6 +1,6 @@
 """
 memhunter/carvers/c2_deobfuscator.py
-Focused C2 hunter ported from kinetic-memhunter:
+Focused C2 hunter and cryptographic C2 solver:
 1. In-memory Base64 blob decoding to unveil obfuscated C2 URLs, IPs, webhooks, and JSON configs.
 2. Extended C2 protocol carving (.onion Tor gates, RedLine WCF net.tcp://, WebSockets ws:// & wss://,
    and extended Dead Drop Resolvers: rentry.co, telegra.ph, gist/raw.githubusercontent.com).

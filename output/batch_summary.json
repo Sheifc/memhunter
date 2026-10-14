@@ -1,0 +1,35 @@
+{
+  "total": 2,
+  "succeeded": 2,
+  "no_memdump": 0,
+  "errors": 0,
+  "families": {
+    "dcrat": 1,
+    "pulsar_rat": 1
+  },
+  "samples": [
+    {
+      "sha256": "e874fb62aa885ba11f23a8c78ec975b137ac29bf46c5a29900314af9fcc3ab5b",
+      "family": "dcrat",
+      "ips_urls_count": 7,
+      "webhooks_count": 0,
+      "wallets_count": 0,
+      "ddr_count": 1,
+      "targets": []
+    },
+    {
+      "sha256": "4bf843c79679754183c356a929048280b755f12ecdba16a17967567e2aec3c82",
+      "family": "pulsar_rat",
+      "ips_urls_count": 4,
+      "webhooks_count": 0,
+      "wallets_count": 0,
+      "ddr_count": 0,
+      "targets": [
+        "Chromium Local State",
+        "Chromium Login Data",
+        "Firefox logins.json"
+      ]
+    }
+  ],
+  "elapsed_sec": 32.58
+}
