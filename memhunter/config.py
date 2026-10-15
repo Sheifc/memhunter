@@ -1,7 +1,8 @@
 """
 memhunter/config.py
 Environment configuration and strict false-positive blocklists eliminating legacy
-service_memdump noise (X.509 OIDs, version numbers, sandbox hooks, and FTP runtime strings).
+service_memdump and Zenbox/CAPE sandbox noise (X.509 OIDs, version numbers,
+Windows PKI/CRL/Update endpoints, MSN widget URLs, and FTP runtime strings).
 """
 
 from __future__ import annotations
@@ -10,6 +11,7 @@ import ipaddress
 import os
 import re
 from pathlib import Path
+from urllib.parse import urlsplit
 
 from dotenv import load_dotenv
 
@@ -44,6 +46,11 @@ FALSE_POSITIVE_IP_PREFIXES = (
     "2.23.43.",
     "2.23.140.",
     "1.2.840.",
+    "49.1.1.",   # RSA PKCS#1 OID suffix (1.2.840.113549.1.1.*)
+    "11.10.3.",  # Assembly/CTL version prefix
+    "11.3.6.",   # OID substring
+    "8.30.",     # Windows authrootstl CTL version prefix (8.30.54.19, etc.)
+    "24.2.0.",   # Assembly version prefix (24.2.0.3)
     "0.",
     "127.",
     "169.254.",
@@ -71,9 +78,19 @@ FALSE_POSITIVE_EXACT_IPS = {
     "8.8.8.8",
     "8.8.4.4",
     "49.1.1.1",
+    "49.1.1.2",
+    "49.1.1.11",
+    # Zenbox / CAPE sandbox background & NTP / CDN noise IPs
+    "88.218.62.20",
+    "185.69.122.235",
+    "34.16.15.245",
+    "35.254.228.181",
+    "168.61.215.74",
+    "104.20.29.150",
+    "172.66.171.73",
 }
 
-# 2. Sandbox hooks, Python runtime docstrings, and benign CA/schema URLs polluting URL/DDR lists
+# 2. Sandbox hooks, Python runtime docstrings, Windows PKI/CRL/WCF schemas, and Zenbox MSN widget URLs
 FALSE_POSITIVE_URL_SUBSTRINGS = (
     "github.com/therealdreg/anticuckoo",
     "github.com/python/cpython",
@@ -85,23 +102,44 @@ FALSE_POSITIVE_URL_SUBSTRINGS = (
     "notofonts.github.io",
     "schemas.microsoft.com",
     "schemas.xmlsoap.org",
+    "schemas.datacontract.org",
     "www.w3.org",
     "purl.org",
-    "ocsp.digicert.com",
-    "crl.comodoca.com",
-    "crt.sectigo.com",
-    "crl.sectigo.com",
-    "ocsp.sectigo.com",
-    "crl.microsoft.com",
-    "www.microsoft.com/pki",
-    "www.microsoft.com0",
-    "wdcp.microsoft.com",
+    "exslt.org",
+    "digicert.com",
+    "comodoca.com",
+    "comodo.net",
+    "verisign.com",
+    "sectigo.com",
+    "microsoft.com",
+    "go.microsoft.c",
+    "windowsupdate.com",
+    "bingmapsportal.com",
     "letsencrypt.org",
     "pki.goog",
     "aka.ms/",
-    "go.microsoft.com",
     "www.jiyu-kobo.co.jp",
     "ftp.unicode.org",
+    # Zenbox Windows MSN News widget background domains
+    "cnbc.com",
+    "bbc.com",
+    "cbsnews.com",
+    "cbssports.com",
+    "cnn.com",
+    "wsj.com",
+    "foxnews.com",
+    "marketwatch.com",
+    "foreca.com",
+    "fool.com",
+    "independent.co.uk",
+    "architecturaldigest.com",
+    "countryliving.com",
+    "delish.com",
+    "ew.com",
+    "ketv.com",
+    "msn.com",
+    # Placeholder example webhook embedded in 1477 Grabber builder boilerplate
+    "discord.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz",
 )
 
 # 3. Runtime strings misclassified as FTP credentials/activity
@@ -118,7 +156,7 @@ FALSE_POSITIVE_FTP_STRINGS = {
 
 
 def is_valid_public_c2_ip(candidate: str) -> bool:
-    """Validate that a candidate IPv4 string is a real routable IP and not an X.509 OID or version."""
+    """Validate that a candidate IPv4 string is a real routable IP and not an X.509 OID, version, or sandbox CDN."""
     val = candidate.strip()
     if val in FALSE_POSITIVE_EXACT_IPS:
         return False
@@ -147,11 +185,18 @@ def is_valid_public_c2_ip(candidate: str) -> bool:
 
 
 def is_benign_or_sandbox_url(url: str) -> bool:
-    """Return True if a URL belongs to sandbox instrumentation, runtime docstrings, or benign schemas."""
+    """Return True if a URL belongs to sandbox instrumentation, runtime docstrings, MSN widgets, or PKI schemas."""
     low = url.strip().lower()
     if len(low) < 10:
         return True
-    return any(sub in low for sub in FALSE_POSITIVE_URL_SUBSTRINGS)
+    if any(sub in low for sub in FALSE_POSITIVE_URL_SUBSTRINGS):
+        return True
+    # Filter bare root `http(s)://pastebin.com` without a `/raw/<id>` path
+    if "pastebin.com" in low:
+        parts = urlsplit(low)
+        if parts.path in ("", "/"):
+            return True
+    return False
 
 
 def is_valid_ftp_indicator(entry: str) -> bool:

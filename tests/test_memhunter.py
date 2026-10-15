@@ -39,9 +39,11 @@ from memhunter.workspace import EphemeralDumpWorkspace
 
 
 def test_false_positive_ip_filters() -> None:
-    # X.509 OIDs and assembly versions that polluted legacy service_memdump must be rejected
+    # X.509 OIDs, assembly versions, and Zenbox CDN IPs must be rejected
     assert is_valid_public_c2_ip("1.3.6.1") is False
     assert is_valid_public_c2_ip("1.3.185.21") is False
+    assert is_valid_public_c2_ip("49.1.1.11") is False
+    assert is_valid_public_c2_ip("88.218.62.20") is False
     assert is_valid_public_c2_ip("5.5.7.1") is False
     assert is_valid_public_c2_ip("5.15.2.0") is False
     assert is_valid_public_c2_ip("1.0.0.10") is False
@@ -49,19 +51,37 @@ def test_false_positive_ip_filters() -> None:
     assert is_valid_public_c2_ip("127.0.0.1") is False
     # Real public C2 IPs must pass
     assert is_valid_public_c2_ip("89.23.100.155") is True
-    assert is_valid_public_c2_ip("185.69.122.235") is True
+    assert is_valid_public_c2_ip("185.230.162.2") is True
 
 
 def test_false_positive_url_and_ftp_filters() -> None:
     assert is_benign_or_sandbox_url("https://github.com/therealdreg/anticuckoo") is True
     assert is_benign_or_sandbox_url("https://github.com/python/cpython") is True
     assert is_benign_or_sandbox_url("https://github.com/urllib3/urllib3") is True
+    assert is_benign_or_sandbox_url("http://www.cbsnews.com/?ftag=MSF0951a18") is True
+    assert is_benign_or_sandbox_url("http://cacerts.digicert.com/DigiCertGlobalRootG2.crt0B") is True
     assert is_benign_or_sandbox_url("https://pastebin.com/raw/rACMKa5f") is False
 
     assert is_valid_ftp_indicator("USER API") is False
     assert is_valid_ftp_indicator("USER INTERACTION:") is False
     assert is_valid_ftp_indicator("ftp://ftp.unicode.org/") is False
     assert is_valid_ftp_indicator("ftp://exfil.evil-server.biz/upload") is True
+
+
+def test_dotnet_us_decryptor_pulsar_and_redline() -> None:
+    from memhunter.carvers.dotnet_us_decryptor import carve_dotnet_us_configs
+
+    # Simulate RedLine VMProtect %before% UTF-16LE block + Pulsar semicolon Hosts list in RAM
+    redline_utf16 = (
+        "EmptyConfigs\x00GetDynamicConfigs\x00%before%\x00150.241.66.67\x005555\x00rast\x00oJEkLJpYAVTxeJf\x00"
+    ).encode("utf-16le")
+    pulsar_hosts = b"localhost:4782;10.0.2.3:4782;"
+    res = carve_dotnet_us_configs(redline_utf16 + b" " + pulsar_hosts)
+    assert res["family"] == "redline_stealer"
+    assert "150.241.66.67:5555" in res["c2_endpoints"]
+    assert "localhost:4782" in res["c2_endpoints"]
+    assert "10.0.2.3:4782" in res["c2_endpoints"]
+    assert "oJEkLJpYAVTxeJf" in res["mutexes"]
 
 
 def test_parse_minidump_header_and_sbox() -> None:
