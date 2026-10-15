@@ -10,3 +10,5 @@ __pycache__/
 *.bin
 data/memdumps/
 output/unpacked/
+output/.no_memdump_cache.txt
+input_hunt_candidates*.txt

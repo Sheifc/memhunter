@@ -56,7 +56,7 @@ FALSE_POSITIVE_MUTEX_PREFIXES = (
     "Local\\Temp",
     "Local\\Microsoft",
     "Local\\Micr",
-    "Local\\Programs",
+    "Local\\Progra",
     "Local\\Packages",
     "Local\\Application",
     "Local\\Google",
@@ -66,11 +66,16 @@ FALSE_POSITIVE_MUTEX_PREFIXES = (
     "Local\\D3DSCache",
     "Local\\Low",
     "Local\\WERReporting",
+    "Local\\1ImmersiveFocus",
     "Global\\BFE_Notify_Event_",
     "Global\\CLR_PerfMon_",
+    "Global\\Cor_Private_IPCBlock_",
     "Global\\CPFATE_",
     "Global\\Microsoft.Windows.",
+    "Global\\NLS_CodePage_",
     "Global\\WerKernelVertical",
+    "Global\\WSearchMigPluginActive",
+    "Global\\SC_AutoStartComplete",
     "Global\\OneSettingQueryMutex",
     "Global\\UFH_",
 )
@@ -133,6 +138,15 @@ def classify_family_from_memory(
             return "pulsar_rat"
         if b"DcRat" in blob or b"DcRatByqwqdanchun" in blob or "dcratmutex" in joined_mtx:
             return "dcrat"
+        if (
+            b"XWorm" in blob
+            or b"XClient.exe" in blob
+            or b"Plugins\\Chat.dll" in blob
+            or "xworm" in joined_pdb
+            or "spooky v6" in joined_pdb
+            or "ip-api.com/csv/?fields=status,query" in joined_urls
+        ):
+            return "xworm_rat"
         if "newraton" in joined_pdb or "commands.pdb" in joined_pdb or b"clientForCrypters" in blob:
             return "raton_rat"
         if (
@@ -166,6 +180,8 @@ def classify_family_from_memory(
         return "cryptocurrency_clipper"
     if webhooks:
         return "discord_webhook_stealer"
+    if "uploads.im/api" in joined_urls and "checkip.dyndns.org" in joined_urls:
+        return "agent_tesla"
     if "niceports.shop" in joined_urls:
         return "pulsar_rat"
     return "generic_stealer_or_rat"
@@ -174,14 +190,28 @@ def classify_family_from_memory(
 def _deduplicate_c2_endpoints(endpoints: Set[str]) -> List[str]:
     """
     Remove bare IPv4 strings (e.g. `150.241.66.67` or `185.230.162.2`) when a full
-    `ip:port` endpoint (`150.241.66.67:5555`, `185.230.162.2:6532`) is already present.
+    `ip:port` endpoint (`150.241.66.67:5555`, `185.230.162.2:6532`) is already present,
+    as well as truncated 1-digit IPv4 suffixes (e.g. `93.161.193.99` when `193.161.193.99` is present).
     """
     hosts_with_ports: Set[str] = set()
+    all_hosts: Set[str] = set()
     for ep in endpoints:
-        if ":" in ep and not ep.startswith(("http://", "https://", "ws://", "wss://", "net.tcp://", "ftp://")):
+        if not ep.startswith(("http://", "https://", "ws://", "wss://", "net.tcp://", "ftp://")):
             host_part = ep.split(":", 1)[0]
-            hosts_with_ports.add(host_part)
-    filtered = [ep for ep in endpoints if ep not in hosts_with_ports]
+            all_hosts.add(host_part)
+            if ":" in ep:
+                hosts_with_ports.add(host_part)
+
+    suffix_ips: Set[str] = set()
+    for h in all_hosts:
+        if f"1{h}" in all_hosts or f"2{h}" in all_hosts:
+            suffix_ips.add(h)
+
+    filtered = [
+        ep
+        for ep in endpoints
+        if ep not in hosts_with_ports and ep.split(":", 1)[0] not in suffix_ips
+    ]
     return sorted(filtered)
 
 
@@ -231,7 +261,8 @@ def carve_memory_buffers(
             if not is_benign_or_sandbox_url(ep):
                 ips_urls.add(ep)
         for d in us_res["ddrs"]:
-            ddr_urls.add(d)
+            if not is_benign_or_sandbox_url(d):
+                ddr_urls.add(d)
         for mtx in us_res["mutexes"]:
             mutexes.add(mtx)
         for b_str in us_res["decrypted_blobs"]:
@@ -258,7 +289,9 @@ def carve_memory_buffers(
                 webhooks.add(m.group(0).decode("ascii", errors="ignore"))
 
             for m in PASTEBIN_RAW_RE.finditer(buf):
-                ddr_urls.add(m.group(0).decode("ascii", errors="ignore"))
+                p_url = m.group(0).decode("ascii", errors="ignore")
+                if not is_benign_or_sandbox_url(p_url):
+                    ddr_urls.add(p_url)
             for m in STEAM_PROFILE_RE.finditer(buf):
                 ddr_urls.add(m.group(0).decode("ascii", errors="ignore"))
             for m in TELEGRAM_CHAN_RE.finditer(buf):
@@ -271,7 +304,11 @@ def carve_memory_buffers(
 
             for m in C2_HOST_PORT_RE.finditer(buf):
                 hp = m.group(0).decode("ascii", errors="ignore")
+                host_only = m.group(1).decode("ascii", errors="ignore").lower()
                 port_num = int(m.group(2).decode("ascii"))
+                # Skip C++ source file + line numbers like `updater.cc:147` or `builtins-collections-gen.cc:2022`
+                if host_only.endswith((".cc", ".sh")) and host_only.count(".") == 1:
+                    continue
                 if 1 <= port_num <= 65535 and port_num != 123 and not is_benign_or_sandbox_url(hp):
                     ips_urls.add(hp)
 
@@ -295,7 +332,7 @@ def carve_memory_buffers(
 
             for m in PDB_PATH_RE.finditer(buf):
                 pdb_val = m.group(0).decode("ascii", errors="ignore")
-                if not pdb_val.lower().startswith("c:\\windows\\"):
+                if not pdb_val.lower().startswith(("c:\\windows\\", "d:\\a\\_work\\", "e:\\a\\_work\\", "f:\\binaries\\")):
                     pdb_paths.add(pdb_val)
             for m in MUTEX_RE.finditer(buf):
                 mtx_val = m.group(0).decode("ascii", errors="ignore")

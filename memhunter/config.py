@@ -48,6 +48,7 @@ FALSE_POSITIVE_IP_PREFIXES = (
     "1.2.840.",
     "49.1.1.",   # RSA PKCS#1 OID suffix (1.2.840.113549.1.1.*)
     "11.10.3.",  # Assembly/CTL version prefix
+    "1.10.3.",   # Truncated suffix of 11.10.3.* version
     "11.3.6.",   # OID substring
     "8.30.",     # Windows authrootstl CTL version prefix (8.30.54.19, etc.)
     "24.2.0.",   # Assembly version prefix (24.2.0.3)
@@ -88,6 +89,12 @@ FALSE_POSITIVE_EXACT_IPS = {
     "168.61.215.74",
     "104.20.29.150",
     "172.66.171.73",
+    "72.16.1.1",   # Truncated suffix of RFC1918 172.16.1.1
+    "18.8.8.8",    # ASCII digit prefix + 8.8.8.8
+    "38.8.8.8",    # ASCII digit prefix + 8.8.8.8
+    "7.7.7.3",     # Assembly/font version number
+    "12.2.33.10",  # msedge_elf.dll internal version tuple
+    "2.1.44.88",   # msedge_elf.dll internal version tuple
 }
 
 # 2. Sandbox hooks, Python runtime docstrings, Windows PKI/CRL/WCF schemas, and Zenbox MSN widget URLs
@@ -99,6 +106,11 @@ FALSE_POSITIVE_URL_SUBSTRINGS = (
     "github.com/tensorflow/",
     "github.com/aliftype/",
     "github.com/google/fonts",
+    "github.com/dotnet/",
+    "github.com/protobuf-net/",
+    "github.com/pq-crystals/",
+    "protobuf-net.github.io",
+    "stackoverflow.com/",
     "notofonts.github.io",
     "schemas.microsoft.com",
     "schemas.xmlsoap.org",
@@ -119,7 +131,28 @@ FALSE_POSITIVE_URL_SUBSTRINGS = (
     "pki.goog",
     "aka.ms/",
     "www.jiyu-kobo.co.jp",
-    "ftp.unicode.org",
+    "unicode.org",
+    "ns.adobe.com",
+    "visualstudio.net",
+    "example.com",
+    "exmple.com",
+    "foo.com",
+    "crashpad.chromium.org",
+    "clients2.google.com",
+    "dl.google.com",
+    "support.google.com",
+    "googleapis.com",
+    "www.google.com/maps",
+    "pastebin.com/raw/yoururl",
+    "dejavu-fonts.org",
+    "dejavu.sourceforge.net",
+    "scripts.sil.org",
+    "fontforge.sf.net",
+    "linuxlibertine.sf.net",
+    "fontrix.co.kr",
+    "hagilda.com",
+    "monotype.com",
+    "wikipedia.org",
     # Zenbox Windows MSN News widget & Edge WebView2 background domains
     "cnbc.com",
     "bbc.com",
@@ -233,19 +266,28 @@ def is_valid_public_c2_ip(candidate: str) -> bool:
 def is_benign_or_sandbox_url(url: str) -> bool:
     """Return True if a URL belongs to sandbox instrumentation, runtime docstrings, MSN widgets, or PKI schemas."""
     low = url.strip().lower()
-    if len(low) < 10:
+    if len(low) < 10 or low.rstrip("/") in ("https://api.telegram.org/bot", "http://api.telegram.org/bot"):
         return True
     if any(sub in low for sub in FALSE_POSITIVE_URL_SUBSTRINGS):
         return True
     if "://" in low:
-        parts = urlsplit(low)
-        host = parts.hostname or ""
+        try:
+            parts = urlsplit(low)
+            host = parts.hostname or ""
+        except ValueError:
+            return True
         if (
             not host
             or ("." not in host and host != "localhost")
             or host.endswith((".query", ".t", ".tiles"))
+            or (host.startswith("www.") and host.count(".") < 2)
+            or not re.match(r"^[a-z0-9.-]+$", host)
         ):
             return True
+        if host != "localhost" and not re.match(r"^(?:\d{1,3}\.){3}\d{1,3}$", host):
+            tld = host.rsplit(".", 1)[-1]
+            if not re.match(r"^[a-z]{2,12}$", tld):
+                return True
         # Filter bare root `http(s)://pastebin.com` without a `/raw/<id>` path
         if "pastebin.com" in host and parts.path in ("", "/"):
             return True

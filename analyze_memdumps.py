@@ -42,6 +42,7 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     parser.add_argument("--local-dump", type=Path, default=None, help="Optional local .zip or .dmp file to analyze")
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR, help="Output directory for JSON/MD")
     parser.add_argument("--resolve-ddr", action="store_true", help="Resolve live Pastebin Dead Drop URLs")
+    parser.add_argument("--skip-existing", action="store_true", help="Skip hashes that already have a generated JSON report")
     return parser.parse_args(argv)
 
 
@@ -76,7 +77,42 @@ def main(argv: Optional[List[str]] = None) -> int:
         "samples": [],
     }
 
+    no_memdump_cache_path = args.output_dir / ".no_memdump_cache.txt"
+    no_memdump_cache = set()
+    if args.skip_existing and no_memdump_cache_path.is_file():
+        no_memdump_cache = {
+            line.strip().lower()
+            for line in no_memdump_cache_path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        }
+
     for idx, sha in enumerate(hashes, start=1):
+        existing_json = args.output_dir / "configs" / f"{sha}_memdump.json"
+        if args.skip_existing and existing_json.is_file():
+            try:
+                rpt = json.loads(existing_json.read_text(encoding="utf-8"))
+                summary["succeeded"] += 1
+                fam = rpt.get("family_supposition", "unknown")
+                summary["families"][fam] = summary["families"].get(fam, 0) + 1
+                c2 = rpt.get("extracted_c2", {})
+                summary["samples"].append(
+                    {
+                        "sha256": sha,
+                        "family": fam,
+                        "ips_urls_count": len(c2.get("ips_urls", [])),
+                        "webhooks_count": len(c2.get("webhooks", [])),
+                        "wallets_count": len(c2.get("crypto_wallets", [])),
+                        "ddr_count": len(c2.get("ddr", [])),
+                        "targets": rpt.get("behaviour_intel", {}).get("malware_targets", []),
+                    }
+                )
+                continue
+            except Exception:
+                pass
+        if args.skip_existing and sha in no_memdump_cache:
+            summary["no_memdump"] += 1
+            continue
+
         logger.info("=== [%d/%d] Processing %s ===", idx, len(hashes), sha)
         try:
             res = analyze_sample_memdump(
@@ -106,6 +142,9 @@ def main(argv: Optional[List[str]] = None) -> int:
                 )
             else:
                 summary["no_memdump"] += 1
+                args.output_dir.mkdir(parents=True, exist_ok=True)
+                with no_memdump_cache_path.open("a", encoding="utf-8") as cf:
+                    cf.write(f"{sha}\n")
         except Exception as exc:
             logger.error("[%s] Error during memdump analysis: %s", sha[:12], exc)
             summary["errors"] += 1
