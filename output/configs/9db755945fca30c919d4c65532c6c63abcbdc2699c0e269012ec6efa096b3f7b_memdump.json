@@ -1,7 +1,7 @@
 {
   "hash": "9db755945fca30c919d4c65532c6c63abcbdc2699c0e269012ec6efa096b3f7b",
   "sha256": "9db755945fca30c919d4c65532c6c63abcbdc2699c0e269012ec6efa096b3f7b",
-  "analyzed_at": "2026-10-14T22:42:15Z",
+  "analyzed_at": "2026-10-15T06:19:12Z",
   "family_supposition": "pulsar_rat",
   "sandbox_sources": [
     {
@@ -3962,428 +3962,46 @@
     "ips_urls": [
       {
         "channel_type": "custom",
-        "value": "34.16.15.245"
+        "value": "https://api.ipify.org/"
       },
       {
         "channel_type": "custom",
-        "value": "http://cacerts.digicert.com/DigiCertGlobalRootG2.crt0B"
+        "value": "https://ipwho.is/"
       },
       {
         "channel_type": "custom",
-        "value": "http://caissuers.microsoft.com/pkiops/certs/Microsoft%20TLS%20G2%20RSA%20CA%20OCSP%2002.crt0-"
+        "value": "https://www.amyuni.com/downloads/usbmmidd_v2.zip"
       },
       {
         "channel_type": "custom",
-        "value": "http://caissuers.microsoft.com/pkiops/certs/Microsoft%20TLS%20RSA%20Root%20G2%20-%20xsign.crt0-"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://cnbc.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://crl2.microsoft.com/pkiops/crl/Microsoft%20TLS%20RSA%20Root%20G2.crl0"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://crl2.microsoft.com/pkiops/crl/partition/Microsoft%20TLS%20G2%20RSA%20CA%20OCSP%2002_Partition00098.crl0f"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://crl3.digicert.com/DigiCertGlobalRootG2.crl0"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://fool.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://oneocsp.microsoft.com/ocsp0"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://online.wsj.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.architecturaldigest.com/?mbid=synd_msn"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.bbc.com/news/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.cbsnews.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.cbsnews.com/?ftag=MSF0951a18"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.cbssports.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.cnn.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.countryliving.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.delish.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.ew.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.foreca.com"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.foxnews.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.independent.co.uk/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.ketv.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.marketwatch.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.ms.now"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.nbcnews.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.reuters.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.techradar.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.thehill.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.usatoday.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.usatoday.com/sports/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://www.vulture.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://88498978007"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://abcnews.go.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/news/feed/pages/dashboard4?activityId=17b35552-2459-40f5-953d-2a47b8108bf5&timeOut=2000&ocid=winp2widget&scn=al_app_anon&apikey=lxSNtibdZ45aPe8BHuUR6XwhuuruYfwejEYNpSqgcd&cm=en-us&cm=en-us&User=m-1DED923F5613"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=0205a87c-40a4-f50a-bd29-fb657b2a594f&user=m-1DED923F5613651C1A738793577C6480&lat=41.25200653076172&long=-95.83625793457031&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=0205a87c-40a4-f50a-bd29-fb657b2a594f&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=02bde011-1e9d-3aff-8309-7d07d4031798&user=m-1DED923F5613651C1A738793577C6480&lat=41.25200653076172&long=-95.83625793457031&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=02bde011-1e9d-3aff-8309-7d07d4031798&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=1012541c-7374-9c46-9953-ffa750eb6b6e&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=11ebfe0a-8a02-10e8-c862-80adb116274c&user=m-1DED923F5613651C1A738793577C6480&lat=41.25200653076172&long=-95.83625793457031&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=11ebfe0a-8a02-10e8-c862-80adb116274c&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=13d04637-4edc-8f76-b32f-ac85b00cec98&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=15c33ab8-08dd-75c2-cd4f-840ba3bac344&user=m-1DED923F5613651C1A738793577C6480&lat=41.25200653076172&long=-95.83625793457031&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=3a6de99d-5afa-be6c-2d63-3b98dc7ff313&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=TournamentsList"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=3e4b6c3b-d87a-8603-8e90-e93f0f328660&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=40dacb9f-44dd-4d30-b8fd-bdfd69ac38f7&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=Tennis&cardType"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=50939367-7e05-543f-3a79-7d4c998285e9&user=m-1DED923F5613651C1A738793577C6480&lat=41.25200653076172&long=-95.83625793457031&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=50939367-7e05-543f-3a79-7d4c998285e9&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=5ada59c0-d6a8-11bb-8542-4ba618cf0c8d&user=m-1DED923F5613651C1A738793577C6480&lat=41.25200653076172&long=-95.83625793457031&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=5f7e2e69-2271-8ff3-dc1c-b1c89c4a32c1&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=TournamentsList"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=651280b7-1fa5-b801-2dbc-bfe364804e51&user=m-1DED923F5613651C1A738793577C6480&lat=41.25200653076172&long=-95.83625793457031&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=6ff32734-2ab0-2636-a1b0-1e2f5e94a701&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=736bacc7-45bd-44bc-b09d-d31eaa0229d4&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=TournamentsList"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=9a4045b3-0581-2352-1d69-cb2bc1cbd6fa&user=m-1DED923F5613651C1A738793577C6480&lat=41.25200653076172&long=-95.83625793457031&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=b7a76276-375a-718b-52d9-49eae9b263a4&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=TournamentsList"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=bd48a5b1-961c-df36-94e0-ff284105d179&user=m-1DED923F5613651C1A738793577C6480&lat=41.25200653076172&long=-95.83625793457031&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=bd48a5b1-961c-df36-94e0-ff284105d179&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=be775f8e-54ab-400d-f0b4-85a37fdc94f7&user=m-1DED923F5613651C1A738793577C6480&lat=41.25200653076172&long=-95.83625793457031&canvas=Window11Dashboard&tabtype=Cricket&cardTyp"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=be775f8e-54ab-400d-f0b4-85a37fdc94f7&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=Cricket&cardTyp"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=c5203baa-43e3-322d-3163-3e107126fcab&user=m-1DED923F5613651C1A738793577C6480&lat=41.25200653076172&long=-95.83625793457031&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=c5203baa-43e3-322d-3163-3e107126fcab&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=ccc6e965-470d-863f-66c1-91cdaa7267c8&user=m-1DED923F5613651C1A738793577C6480&lat=41.25200653076172&long=-95.83625793457031&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=ccc6e965-470d-863f-66c1-91cdaa7267c8&user=m-1DED923F5613651C1A738793577C6480&lat=41.261199951171875&long=-95.8520278930664&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=e10ad4e3-4049-55c9-d1f4-f83f31a6a3be&user=m-1DED923F5613651C1A738793577C6480&lat=41.25200653076172&long=-95.83625793457031&canvas=Window11Dashboard&tabtype=Cricket&cardTyp"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=eef12ef2-8dba-1e7b-b5c7-87f4be811495&user=m-1DED923F5613651C1A738793577C6480&lat=41.25200653076172&long=-95.83625793457031&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com/sports/blended?market=en-us&satoriid=fcf26e59-1c27-8bc8-206f-f8adb170f4a2&user=m-1DED923F5613651C1A738793577C6480&lat=41.25200653076172&long=-95.83625793457031&canvas=Window11Dashboard&tabtype=TeamVsTeam&card"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com:443/news/feed/pages/dashboard4?activityId=1905b687-5a0b-46cb-9"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com:443/news/feed/pages/dashboard4?activityId=1905b687-5a0b-46cb-990b-83c6270848d0&timeOut=2000&ocid=winp2widget&scn=al_app_anon&apikey=lxSNtibdZ45aPe8BHuUR6XwhuuruYfwejEYNpSqgcd&cm=en-us&cm=en-us&User=m-1DED923F"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com:443/news/feed/pages/dashboard4?activityId=4237b453-c"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com:443/news/feed/pages/dashboard4?activityId=4237b453-cdca-44ad-bde3-684a34841481&timeOut=2000&ocid=winp2widget&scn=al_app_anon&apikey=lxSNtibdZ45aPe8BHuUR6XwhuuruYfwejEYNpSqgcd&cm=en-us&cm=en-us&User=m-1DED923F"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com:443/news/feed/pages/dashboard4?activityId=e1a487da-ac38-4af6-b1eb-30f9d06b22eb&timeOut=2000"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://api.msn.com:443/news/feed/pages/dashboard4?activityId=e1a487da-ac38-4af6-b1eb-30f9d06b22eb&timeOut=2000&ocid=winp2widget&scn=al_app_anon&apikey=lxSNtibdZ45aPe8BHuUR6XwhuuruYfwejEYNpSqgcd&cm=en-us&cm=en-us&User=m-1DED923F"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://apnews.com/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/severeweathersvgimage/202603120929/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/severeweathersvgimage/202603120954/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/severeweathersvgimage/202603121026/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/background/v2.0/jpg/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/finance/crypto/icons/Cryptoc2111Image.png"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/finance/crypto/icons/Cryptoc2112Image.png"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/finance/crypto/icons/Cryptoc2113Image.png"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/finance/crypto/icons/Cryptoc2114Image.png"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/finance/crypto/icons/Cryptoc2117Image.png"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/finance/listV4/Prices.png"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/finance/listV4/TEIndicator.png"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/news/BreakingNews_72x72.png"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/news/ForYouNews_72x72_light.png"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/weather/Icons/MSIAWwA=/Alert/Alert_FD_R.png"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/weather/Icons/MSIAWwA=/Alert/Alert_WI_O.png"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/weather/Icons/MSIAWwA=/Condition/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/weather/Icons/MSIAWwA=/Condition/AAehwh2.png"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/weather/Icons/MSIAWwA=/Condition/AAehwh2.svg"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/weather/Icons/taskbar_v10/"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/weather/taskbar/animation/20240908.1/Alert/WA26_WindOrange/WA26_WindOrange_"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/weather/taskbar/animation/20240908.1/Alert/WA33_FireRed/WA33_FireRed_"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/weather/taskbar/animation/20240908.1/Weather/W33_ClearNight/W33_ClearNight_"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://assets.msn.com/weathermapdata/1/static/weather/taskbar/animation/jsonv6/TB_WeatherClearNight.json"
+        "value": "tcp.niceports.shop:20943"
       }
     ],
     "webhooks": [],
     "crypto_wallets": [],
     "ddr": [],
     "ftp_activity": [],
-    "decoded_base64_c2_blobs": [],
+    "decoded_base64_c2_blobs": [
+      "pulsar_rat Settings: 1.6.5",
+      "pulsar_rat Settings: tcp.niceports.shop:20943;",
+      "pulsar_rat Settings: svchost.exe",
+      "pulsar_rat Settings: SOundpad crack.exe",
+      "pulsar_rat Settings: e82243e5-43e6-4b23-9ece-0e0d4d02ce14",
+      "pulsar_rat Settings: crack",
+      "pulsar_rat Settings: АРБУЗ"
+    ],
     "rc4_decrypted_c2s": []
   },
   "behaviour_intel": {
     "extracted_c2_json_config": [],
     "malware_targets": [],
     "mutexes": [
-      "Local\\Microsoft",
-      "Local\\Packages",
-      "Local\\Programs",
-      "Local\\Temp"
+      "e82243e5-43e6-4b23-9ece-0e0d4d02ce14"
     ],
     "pdb_paths": []
   },
   "sqlite_database_count": 0,
   "in_memory_strings": [
-    "Local\\Microsoft",
-    "Local\\Packages",
-    "Local\\Programs",
-    "Local\\Temp"
+    "e82243e5-43e6-4b23-9ece-0e0d4d02ce14"
   ]
 }

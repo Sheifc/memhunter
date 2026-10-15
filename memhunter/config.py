@@ -120,11 +120,12 @@ FALSE_POSITIVE_URL_SUBSTRINGS = (
     "aka.ms/",
     "www.jiyu-kobo.co.jp",
     "ftp.unicode.org",
-    # Zenbox Windows MSN News widget background domains
+    # Zenbox Windows MSN News widget & Edge WebView2 background domains
     "cnbc.com",
     "bbc.com",
     "cbsnews.com",
     "cbssports.com",
+    "cbstexas.com",
     "cnn.com",
     "wsj.com",
     "foxnews.com",
@@ -138,6 +139,51 @@ FALSE_POSITIVE_URL_SUBSTRINGS = (
     "ew.com",
     "ketv.com",
     "msn.com",
+    "bing.com",
+    "akamaized.net",
+    "office.net",
+    "live.com",
+    "abcnews.go.com",
+    "apnews.com",
+    "nbcnews.com",
+    "reuters.com",
+    "techradar.com",
+    "thehill.com",
+    "usatoday.com",
+    "vulture.com",
+    "ms.now",
+    "floridadep.gov",
+    "howtogeek.com",
+    "magicguides.com",
+    "businessinsider.com",
+    "scrippsnews.com",
+    "seekingalpha.com",
+    "theweek.com",
+    "1011now.com",
+    "axios.com",
+    "bloomberg.com",
+    "foodrepublic.com",
+    "forbes.com",
+    "goodhousekeeping.com",
+    "huffpost.com",
+    "marieclaire.com",
+    "mensjournal.com",
+    "newsweek.com",
+    "pollensense.com",
+    "si.com",
+    "slashgear.com",
+    "smithsonianmag.com",
+    "statista.com",
+    "tastingtable.com",
+    "theguardian.com",
+    "tomsguide.com",
+    "washingtonpost.com",
+    "weather.gov",
+    "wftv.com",
+    "wowt.com",
+    "youtube.com",
+    "virtualearth.net",
+    "appexmapsappupdate.blob.core.windows.net",
     # Placeholder example webhook embedded in 1477 Grabber builder boilerplate
     "discord.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz",
 )
@@ -191,10 +237,17 @@ def is_benign_or_sandbox_url(url: str) -> bool:
         return True
     if any(sub in low for sub in FALSE_POSITIVE_URL_SUBSTRINGS):
         return True
-    # Filter bare root `http(s)://pastebin.com` without a `/raw/<id>` path
-    if "pastebin.com" in low:
+    if "://" in low:
         parts = urlsplit(low)
-        if parts.path in ("", "/"):
+        host = parts.hostname or ""
+        if (
+            not host
+            or ("." not in host and host != "localhost")
+            or host.endswith((".query", ".t", ".tiles"))
+        ):
+            return True
+        # Filter bare root `http(s)://pastebin.com` without a `/raw/<id>` path
+        if "pastebin.com" in host and parts.path in ("", "/"):
             return True
     return False
 

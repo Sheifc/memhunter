@@ -51,12 +51,33 @@ BTC_BECH32_RE = re.compile(rb"\bbc1q[ac-hj-np-z02-9]{38,58}\b")
 BTC_LEGACY_RE = re.compile(rb"\b[13][a-km-zA-HJ-NP-Z1-9]{25,34}\b")
 
 PDB_PATH_RE = re.compile(rb"[A-Za-z]:\\[\x20-\x7e]{4,160}\.pdb", re.IGNORECASE)
-MUTEX_RE = re.compile(rb"(?:Global\\|Local\\|DcRatMutex_)[A-Za-z0-9_.-]{4,64}")
-UUID_V4_RE = re.compile(rb"\b[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\b")
+MUTEX_RE = re.compile(rb"(?<![\\A-Za-z0-9_/.])(?:Global\\|Local\\|DcRatMutex_)[A-Za-z0-9_.-]{4,64}")
+FALSE_POSITIVE_MUTEX_PREFIXES = (
+    "Local\\Temp",
+    "Local\\Microsoft",
+    "Local\\Micr",
+    "Local\\Programs",
+    "Local\\Packages",
+    "Local\\Application",
+    "Local\\Google",
+    "Local\\BraveSoftware",
+    "Local\\CEF",
+    "Local\\CrashDumps",
+    "Local\\D3DSCache",
+    "Local\\Low",
+    "Local\\WERReporting",
+    "Global\\BFE_Notify_Event_",
+    "Global\\CLR_PerfMon_",
+    "Global\\CPFATE_",
+    "Global\\Microsoft.Windows.",
+    "Global\\WerKernelVertical",
+    "Global\\OneSettingQueryMutex",
+    "Global\\UFH_",
+)
 JSON_CONFIG_RE = re.compile(
     rb"\{[^{}]{10,650}(?:\"grabber_size_max\"|\"steal_discord\"|\"cryptocurrency\"|\"ldb\"\s*:)[^{}]{2,650}\}"
 )
-FTP_CMD_RE = re.compile(rb"(?:ftp://[^\s\"'<>]{6,120}|USER\s+[A-Za-z0-9_.@-]{3,48})")
+FTP_CMD_RE = re.compile(rb"(?:ftp://[^\s\"'<>]{6,120}|USER [A-Za-z0-9_.@-]{3,48}\r\n)")
 
 STEALER_TARGETS = {
     b"Exodus": "Exodus",
@@ -273,9 +294,13 @@ def carve_memory_buffers(
                 wallets.add(f"BTC:{m.group(0).decode('ascii')}")
 
             for m in PDB_PATH_RE.finditer(buf):
-                pdb_paths.add(m.group(0).decode("ascii", errors="ignore"))
+                pdb_val = m.group(0).decode("ascii", errors="ignore")
+                if not pdb_val.lower().startswith("c:\\windows\\"):
+                    pdb_paths.add(pdb_val)
             for m in MUTEX_RE.finditer(buf):
-                mutexes.add(m.group(0).decode("ascii", errors="ignore"))
+                mtx_val = m.group(0).decode("ascii", errors="ignore")
+                if not any(mtx_val.startswith(fp) for fp in FALSE_POSITIVE_MUTEX_PREFIXES):
+                    mutexes.add(mtx_val)
 
             for m in JSON_CONFIG_RE.finditer(buf):
                 candidate = m.group(0).decode("utf-8", errors="ignore")
@@ -287,7 +312,7 @@ def carve_memory_buffers(
                     continue
 
             for m in FTP_CMD_RE.finditer(buf):
-                ftp_str = m.group(0).decode("ascii", errors="ignore")
+                ftp_str = m.group(0).decode("ascii", errors="ignore").strip()
                 if is_valid_ftp_indicator(ftp_str):
                     ftp_items.add(ftp_str)
 
@@ -303,9 +328,6 @@ def carve_memory_buffers(
             for blob_str in b64_res["decoded_c2_blobs"]:
                 if blob_str not in decoded_c2_blobs and len(decoded_c2_blobs) < 25:
                     decoded_c2_blobs.append(blob_str)
-
-        for m in UUID_V4_RE.finditer(wide_ascii):
-            mutexes.add(m.group(0).decode("ascii", errors="ignore"))
 
         for rc4_hit in solve_rc4_encrypted_c2s(raw):
             if rc4_hit not in rc4_decrypted_c2s and len(rc4_decrypted_c2s) < 15:

@@ -1,7 +1,7 @@
 {
   "hash": "6dfe608ddf82a9aa701da7ebc1e30cd113283e2d7b5ca1898c065b6319379e8e",
   "sha256": "6dfe608ddf82a9aa701da7ebc1e30cd113283e2d7b5ca1898c065b6319379e8e",
-  "analyzed_at": "2026-10-14T22:40:16Z",
+  "analyzed_at": "2026-10-15T06:13:46Z",
   "family_supposition": "pulsar_rat",
   "sandbox_sources": [
     {
@@ -42,6 +42,10 @@
     "ips_urls": [
       {
         "channel_type": "custom",
+        "value": "10.0.2.3:4782"
+      },
+      {
+        "channel_type": "custom",
         "value": "http://go.micros"
       },
       {
@@ -55,20 +59,26 @@
       {
         "channel_type": "custom",
         "value": "https://www.amyuni.com/downloads/usbmmidd_v2.zip"
+      },
+      {
+        "channel_type": "custom",
+        "value": "localhost:4782"
       }
     ],
     "webhooks": [],
     "crypto_wallets": [],
     "ddr": [],
-    "ftp_activity": [
-      "USER\nConfig",
-      "USER\nHKEY_CLASSES_ROOT",
-      "USER\nHKEY_LOCAL_MACHINE",
-      "USER\nLOCAL_USER",
-      "USER\nMACHINE",
-      "USER\nROAMING_USER"
+    "ftp_activity": [],
+    "decoded_base64_c2_blobs": [
+      "pulsar_rat Settings: SKIRTA TIK MOKYMOSI REIKMĖMS",
+      "pulsar_rat Settings: localhost:4782;10.0.2.3:4782;",
+      "pulsar_rat Settings: SubDir",
+      "pulsar_rat Settings: Client.exe",
+      "pulsar_rat Settings: cd648a93-a09f-45c3-bbbc-5b71914d995b",
+      "pulsar_rat Settings: KITM Startup",
+      "pulsar_rat Settings: KITM",
+      "pulsar_rat Settings: Logs"
     ],
-    "decoded_base64_c2_blobs": [],
     "rc4_decrypted_c2s": []
   },
   "behaviour_intel": {
@@ -81,13 +91,8 @@
     "mutexes": [
       "Global\\qIxTLs",
       "Global\\qJWdDMzJk5664",
-      "Local\\Application",
-      "Local\\BraveSoftware",
-      "Local\\Google",
-      "Local\\Microsoft",
-      "Local\\Programs",
-      "Local\\Temp",
-      "Local\\cd648a93-a09f-45c3-bbbc-5b71914d995b"
+      "Local\\cd648a93-a09f-45c3-bbbc-5b71914d995b",
+      "cd648a93-a09f-45c3-bbbc-5b71914d995b"
     ],
     "pdb_paths": []
   },
@@ -95,12 +100,7 @@
   "in_memory_strings": [
     "Global\\qIxTLs",
     "Global\\qJWdDMzJk5664",
-    "Local\\Application",
-    "Local\\BraveSoftware",
-    "Local\\Google",
-    "Local\\Microsoft",
-    "Local\\Programs",
-    "Local\\Temp",
-    "Local\\cd648a93-a09f-45c3-bbbc-5b71914d995b"
+    "Local\\cd648a93-a09f-45c3-bbbc-5b71914d995b",
+    "cd648a93-a09f-45c3-bbbc-5b71914d995b"
   ]
 }

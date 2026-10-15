@@ -1,7 +1,7 @@
 {
   "hash": "e874fb62aa885ba11f23a8c78ec975b137ac29bf46c5a29900314af9fcc3ab5b",
   "sha256": "e874fb62aa885ba11f23a8c78ec975b137ac29bf46c5a29900314af9fcc3ab5b",
-  "analyzed_at": "2026-10-14T22:39:07Z",
+  "analyzed_at": "2026-10-15T06:20:41Z",
   "family_supposition": "dcrat",
   "sandbox_sources": [
     {
@@ -42,26 +42,6 @@
     "ips_urls": [
       {
         "channel_type": "custom",
-        "value": "104.20.29.150"
-      },
-      {
-        "channel_type": "custom",
-        "value": "172.66.171.73"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://go.microsoft.c"
-      },
-      {
-        "channel_type": "custom",
-        "value": "http://pastebin.com"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://pastebin.com"
-      },
-      {
-        "channel_type": "custom",
         "value": "https://pastebin.com/raw/rACMKa5f"
       }
     ],
@@ -73,15 +53,16 @@
         "value": "https://pastebin.com/raw/rACMKa5f"
       }
     ],
-    "ftp_activity": [
-      "USER\nConfig",
-      "USER\nHKEY_CLASSES_ROOT",
-      "USER\nHKEY_LOCAL_MACHINE",
-      "USER\nLOCAL_USER",
-      "USER\nMACHINE",
-      "USER\nROAMING_USER"
+    "ftp_activity": [],
+    "decoded_base64_c2_blobs": [
+      "dcrat Settings: DcRatMutex_qwqdanchun",
+      "dcrat Settings: TJrPp4cXonoSwye43vnXAJz+JMLGluYjEsGN65WKXuIafaenl+kwcOQfFIKygNM0Jl1y3T+NpW0vdRONotyKQHF5NB5eF1gv7cmAoO1+zL/n/CKAuCUd4lpFFMW3tu11fue2D8rw8tqS5kbfTFLvaLdHoeIlkRuLrS0fMnVzKeM=",
+      "dcrat Settings: https://pastebin.com/raw/rACMKa5f",
+      "dcrat Settings: false",
+      "dcrat Settings: 1.0.7",
+      "dcrat Settings: true",
+      "dcrat Settings: Roblox"
     ],
-    "decoded_base64_c2_blobs": [],
     "rc4_decrypted_c2s": []
   },
   "behaviour_intel": {
@@ -90,10 +71,7 @@
     "mutexes": [
       "DcRatMutex_qwqdanchun",
       "Global\\rrkXRsLCmp",
-      "Global\\xXHnVsSIcf2744",
-      "Local\\Microsoft",
-      "Local\\Programs",
-      "Local\\Temp"
+      "Global\\xXHnVsSIcf2744"
     ],
     "pdb_paths": []
   },
@@ -102,9 +80,6 @@
     "DcRatMutex_qwqdanchun",
     "Global\\rrkXRsLCmp",
     "Global\\xXHnVsSIcf2744",
-    "Local\\Microsoft",
-    "Local\\Programs",
-    "Local\\Temp",
     "https://pastebin.com/raw/rACMKa5f"
   ]
 }

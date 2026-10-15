@@ -1,7 +1,7 @@
 {
   "hash": "9ba021735c80417221aa581b78b2dcabd612468682aa69ee7624fba948b2c5d9",
   "sha256": "9ba021735c80417221aa581b78b2dcabd612468682aa69ee7624fba948b2c5d9",
-  "analyzed_at": "2026-10-14T22:39:25Z",
+  "analyzed_at": "2026-10-15T06:21:13Z",
   "family_supposition": "1477_grabber",
   "sandbox_sources": [
     {
@@ -50,27 +50,11 @@
     "ips_urls": [
       {
         "channel_type": "custom",
-        "value": "http://go.microsoft.c"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://discord.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz"
-      },
-      {
-        "channel_type": "custom",
         "value": "https://discord.gg/1477"
       },
       {
         "channel_type": "custom",
-        "value": "https://docs.microsoft.com/windows/win32/fileio/maximum-file-path-limitation"
-      },
-      {
-        "channel_type": "custom",
         "value": "https://pastebin.com/raw/PnBaq1L2"
-      },
-      {
-        "channel_type": "custom",
-        "value": "https://youtube.com/@c.4r"
       }
     ],
     "webhooks": [],
@@ -82,9 +66,7 @@
         "resolved_c2": "f"
       }
     ],
-    "ftp_activity": [
-      "USER\nHKEY_LOCAL_MACHINE"
-    ],
+    "ftp_activity": [],
     "decoded_base64_c2_blobs": [],
     "rc4_decrypted_c2s": []
   },
@@ -92,41 +74,19 @@
     "extracted_c2_json_config": [],
     "malware_targets": [],
     "mutexes": [
-      "Global\\CLR_PerfMon_StartEnumEvent",
       "Global\\Cor_Private_IPCBlock_v4_5208",
-      "Global\\Microsoft.Windows.Setup",
-      "Global\\WerKernelVerticalConvertingLiveDump",
-      "Global\\WerKernelVerticalGeneratingDump",
-      "Global\\WerKernelVerticalReporting",
       "Global\\jRBmGntn",
       "Global\\vwDckx3596",
-      "Global\\vwDckx5208",
-      "Local\\Microsoft",
-      "Local\\Progra",
-      "Local\\Programs",
-      "Local\\Temp",
-      "Local\\WERReportingForProcess",
-      "Local\\WERReportingForProcessComplete"
+      "Global\\vwDckx5208"
     ],
     "pdb_paths": []
   },
   "sqlite_database_count": 0,
   "in_memory_strings": [
-    "Global\\CLR_PerfMon_StartEnumEvent",
     "Global\\Cor_Private_IPCBlock_v4_5208",
-    "Global\\Microsoft.Windows.Setup",
-    "Global\\WerKernelVerticalConvertingLiveDump",
-    "Global\\WerKernelVerticalGeneratingDump",
-    "Global\\WerKernelVerticalReporting",
     "Global\\jRBmGntn",
     "Global\\vwDckx3596",
     "Global\\vwDckx5208",
-    "Local\\Microsoft",
-    "Local\\Progra",
-    "Local\\Programs",
-    "Local\\Temp",
-    "Local\\WERReportingForProcess",
-    "Local\\WERReportingForProcessComplete",
     "https://pastebin.com/raw/PnBaq1L2"
   ]
 }

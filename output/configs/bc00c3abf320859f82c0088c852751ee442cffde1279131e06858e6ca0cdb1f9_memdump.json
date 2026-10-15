@@ -1,7 +1,7 @@
 {
   "hash": "bc00c3abf320859f82c0088c852751ee442cffde1279131e06858e6ca0cdb1f9",
   "sha256": "bc00c3abf320859f82c0088c852751ee442cffde1279131e06858e6ca0cdb1f9",
-  "analyzed_at": "2026-10-14T22:41:06Z",
+  "analyzed_at": "2026-10-15T06:16:13Z",
   "family_supposition": "pulsar_rat",
   "sandbox_sources": [
     {
@@ -42,11 +42,7 @@
     "ips_urls": [
       {
         "channel_type": "custom",
-        "value": "11.10.3.37"
-      },
-      {
-        "channel_type": "custom",
-        "value": "11.10.3.42"
+        "value": "10.0.2.3:4782"
       },
       {
         "channel_type": "custom",
@@ -59,20 +55,26 @@
       {
         "channel_type": "custom",
         "value": "https://www.amyuni.com/downloads/usbmmidd_v2.zip"
+      },
+      {
+        "channel_type": "custom",
+        "value": "localhost:4782"
       }
     ],
     "webhooks": [],
     "crypto_wallets": [],
     "ddr": [],
-    "ftp_activity": [
-      "USER\nConfig",
-      "USER\nHKEY_CLASSES_ROOT",
-      "USER\nHKEY_LOCAL_MACHINE",
-      "USER\nLOCAL_USER",
-      "USER\nMACHINE",
-      "USER\nROAMING_USER"
+    "ftp_activity": [],
+    "decoded_base64_c2_blobs": [
+      "pulsar_rat Settings: SKIRTA TIK MOKYMOSI REIKMĖMS",
+      "pulsar_rat Settings: localhost:4782;10.0.2.3:4782;",
+      "pulsar_rat Settings: SubDir",
+      "pulsar_rat Settings: svchost.exe",
+      "pulsar_rat Settings: cd648a93-a09f-45c3-bbbc-5b71914d995b",
+      "pulsar_rat Settings: KITM Startup",
+      "pulsar_rat Settings: KITM",
+      "pulsar_rat Settings: Logs"
     ],
-    "decoded_base64_c2_blobs": [],
     "rc4_decrypted_c2s": []
   },
   "behaviour_intel": {
@@ -85,13 +87,8 @@
     "mutexes": [
       "Global\\izxqTpPmL",
       "Global\\rHXmIbm3236",
-      "Local\\Application",
-      "Local\\BraveSoftware",
-      "Local\\Google",
-      "Local\\Microsoft",
-      "Local\\Programs",
-      "Local\\Temp",
-      "Local\\cd648a93-a09f-45c3-bbbc-5b71914d995b"
+      "Local\\cd648a93-a09f-45c3-bbbc-5b71914d995b",
+      "cd648a93-a09f-45c3-bbbc-5b71914d995b"
     ],
     "pdb_paths": []
   },
@@ -99,12 +96,7 @@
   "in_memory_strings": [
     "Global\\izxqTpPmL",
     "Global\\rHXmIbm3236",
-    "Local\\Application",
-    "Local\\BraveSoftware",
-    "Local\\Google",
-    "Local\\Microsoft",
-    "Local\\Programs",
-    "Local\\Temp",
-    "Local\\cd648a93-a09f-45c3-bbbc-5b71914d995b"
+    "Local\\cd648a93-a09f-45c3-bbbc-5b71914d995b",
+    "cd648a93-a09f-45c3-bbbc-5b71914d995b"
   ]
 }

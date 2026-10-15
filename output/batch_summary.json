@@ -4,47 +4,16 @@
   "no_memdump": 0,
   "errors": 0,
   "families": {
-    "dcrat": 1,
-    "1477_grabber": 1,
     "pulsar_rat": 8,
-    "generic_stealer_or_rat": 2
+    "redline_stealer": 2,
+    "dcrat": 1,
+    "1477_grabber": 1
   },
   "samples": [
     {
-      "sha256": "e874fb62aa885ba11f23a8c78ec975b137ac29bf46c5a29900314af9fcc3ab5b",
-      "family": "dcrat",
-      "ips_urls_count": 6,
-      "webhooks_count": 0,
-      "wallets_count": 0,
-      "ddr_count": 1,
-      "targets": []
-    },
-    {
-      "sha256": "9ba021735c80417221aa581b78b2dcabd612468682aa69ee7624fba948b2c5d9",
-      "family": "1477_grabber",
-      "ips_urls_count": 6,
-      "webhooks_count": 0,
-      "wallets_count": 0,
-      "ddr_count": 1,
-      "targets": []
-    },
-    {
       "sha256": "4bf843c79679754183c356a929048280b755f12ecdba16a17967567e2aec3c82",
       "family": "pulsar_rat",
-      "ips_urls_count": 3,
-      "webhooks_count": 0,
-      "wallets_count": 0,
-      "ddr_count": 0,
-      "targets": [
-        "Chromium Local State",
-        "Chromium Login Data",
-        "Firefox logins.json"
-      ]
-    },
-    {
-      "sha256": "4f3c6e816429e6336a61c33ed3753b687b7bc58b4bd5ec78130ee1640976831d",
-      "family": "pulsar_rat",
-      "ips_urls_count": 3,
+      "ips_urls_count": 5,
       "webhooks_count": 0,
       "wallets_count": 0,
       "ddr_count": 0,
@@ -57,7 +26,33 @@
     {
       "sha256": "6dfe608ddf82a9aa701da7ebc1e30cd113283e2d7b5ca1898c065b6319379e8e",
       "family": "pulsar_rat",
-      "ips_urls_count": 4,
+      "ips_urls_count": 6,
+      "webhooks_count": 0,
+      "wallets_count": 0,
+      "ddr_count": 0,
+      "targets": [
+        "Chromium Local State",
+        "Chromium Login Data",
+        "Firefox logins.json"
+      ]
+    },
+    {
+      "sha256": "b001f7dd5694d912c54ebe2a7c24cf8b748b060089eaf8a667ce9a5c328e5465",
+      "family": "pulsar_rat",
+      "ips_urls_count": 6,
+      "webhooks_count": 0,
+      "wallets_count": 0,
+      "ddr_count": 0,
+      "targets": [
+        "Chromium Local State",
+        "Chromium Login Data",
+        "Firefox logins.json"
+      ]
+    },
+    {
+      "sha256": "4f3c6e816429e6336a61c33ed3753b687b7bc58b4bd5ec78130ee1640976831d",
+      "family": "pulsar_rat",
+      "ips_urls_count": 5,
       "webhooks_count": 0,
       "wallets_count": 0,
       "ddr_count": 0,
@@ -71,19 +66,6 @@
       "sha256": "9b50cc10d24ffa31df7f172139f3d8371454957c126000f49f33d7421d9a626b",
       "family": "pulsar_rat",
       "ips_urls_count": 5,
-      "webhooks_count": 0,
-      "wallets_count": 0,
-      "ddr_count": 0,
-      "targets": [
-        "Chromium Local State",
-        "Chromium Login Data",
-        "Firefox logins.json"
-      ]
-    },
-    {
-      "sha256": "b001f7dd5694d912c54ebe2a7c24cf8b748b060089eaf8a667ce9a5c328e5465",
-      "family": "pulsar_rat",
-      "ips_urls_count": 4,
       "webhooks_count": 0,
       "wallets_count": 0,
       "ddr_count": 0,
@@ -109,7 +91,7 @@
     {
       "sha256": "b8e7fc9e26503651b171a31597fad9e32d93209734f7cc2bdd848129f1906e46",
       "family": "pulsar_rat",
-      "ips_urls_count": 69,
+      "ips_urls_count": 14,
       "webhooks_count": 0,
       "wallets_count": 0,
       "ddr_count": 0,
@@ -120,7 +102,7 @@
     {
       "sha256": "9db755945fca30c919d4c65532c6c63abcbdc2699c0e269012ec6efa096b3f7b",
       "family": "pulsar_rat",
-      "ips_urls_count": 100,
+      "ips_urls_count": 4,
       "webhooks_count": 0,
       "wallets_count": 0,
       "ddr_count": 0,
@@ -128,7 +110,7 @@
     },
     {
       "sha256": "4eac3af98172bffff23b22b4be3981bea600e5ab723871eec66def769f4feed3",
-      "family": "generic_stealer_or_rat",
+      "family": "redline_stealer",
       "ips_urls_count": 2,
       "webhooks_count": 0,
       "wallets_count": 0,
@@ -143,7 +125,7 @@
     },
     {
       "sha256": "974cbb7090edbd506fda38969b77a391aaa6263e4365622f548bbff0b5217b97",
-      "family": "generic_stealer_or_rat",
+      "family": "redline_stealer",
       "ips_urls_count": 2,
       "webhooks_count": 0,
       "wallets_count": 0,
@@ -155,7 +137,25 @@
         "Phantom",
         "Ronin"
       ]
+    },
+    {
+      "sha256": "e874fb62aa885ba11f23a8c78ec975b137ac29bf46c5a29900314af9fcc3ab5b",
+      "family": "dcrat",
+      "ips_urls_count": 1,
+      "webhooks_count": 0,
+      "wallets_count": 0,
+      "ddr_count": 1,
+      "targets": []
+    },
+    {
+      "sha256": "9ba021735c80417221aa581b78b2dcabd612468682aa69ee7624fba948b2c5d9",
+      "family": "1477_grabber",
+      "ips_urls_count": 2,
+      "webhooks_count": 0,
+      "wallets_count": 0,
+      "ddr_count": 1,
+      "targets": []
     }
   ],
-  "elapsed_sec": 235.14
+  "elapsed_sec": 573.61
 }

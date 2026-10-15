@@ -1,8 +1,8 @@
 {
   "hash": "974cbb7090edbd506fda38969b77a391aaa6263e4365622f548bbff0b5217b97",
   "sha256": "974cbb7090edbd506fda38969b77a391aaa6263e4365622f548bbff0b5217b97",
-  "analyzed_at": "2026-10-14T22:42:49Z",
-  "family_supposition": "generic_stealer_or_rat",
+  "analyzed_at": "2026-10-15T06:20:18Z",
+  "family_supposition": "redline_stealer",
   "sandbox_sources": [
     {
       "sandbox_id": "974cbb7090edbd506fda38969b77a391aaa6263e4365622f548bbff0b5217b97_CAPE Sandbox",
@@ -42,7 +42,7 @@
     "ips_urls": [
       {
         "channel_type": "custom",
-        "value": "150.241.66.67"
+        "value": "150.241.66.67:5555"
       },
       {
         "channel_type": "custom",
@@ -52,10 +52,10 @@
     "webhooks": [],
     "crypto_wallets": [],
     "ddr": [],
-    "ftp_activity": [
-      "USER\nHKEY_LOCAL_MACHINE"
+    "ftp_activity": [],
+    "decoded_base64_c2_blobs": [
+      "RedLine #US config: C2=150.241.66.67:5555 ID=rast Mutex=oJEkLJpYAVTxeJf"
     ],
-    "decoded_base64_c2_blobs": [],
     "rc4_decrypted_c2s": []
   },
   "behaviour_intel": {
@@ -68,22 +68,16 @@
       "Ronin"
     ],
     "mutexes": [
-      "Global\\CLR_PerfMon_StartEnumEvent",
       "Global\\lxGtqvRzw",
       "Global\\tTPNrJGbF6680",
-      "Local\\Microsoft",
-      "Local\\Programs",
-      "Local\\Temp"
+      "oJEkLJpYAVTxeJf"
     ],
     "pdb_paths": []
   },
   "sqlite_database_count": 0,
   "in_memory_strings": [
-    "Global\\CLR_PerfMon_StartEnumEvent",
     "Global\\lxGtqvRzw",
     "Global\\tTPNrJGbF6680",
-    "Local\\Microsoft",
-    "Local\\Programs",
-    "Local\\Temp"
+    "oJEkLJpYAVTxeJf"
   ]
 }

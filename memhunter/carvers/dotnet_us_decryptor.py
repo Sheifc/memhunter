@@ -254,12 +254,20 @@ def carve_dotnet_us_configs(buffer: bytes, wide_ascii: bytes = b"") -> Dict[str,
 
     for stream in us_streams:
         unwrapped = deobfuscate_outer_3arg_aes_cbc(stream)
-        combined = stream + unwrapped
+        for u_str in unwrapped:
+            u_clean = u_str.strip()
+            if u_clean.startswith(("http://", "https://")) and len(u_clean) >= 12 and " " not in u_clean:
+                if "pastebin.com/raw/" in u_clean:
+                    ddrs.add(u_clean)
+                else:
+                    c2_endpoints.add(u_clean)
+
+        active_strings = unwrapped if len(unwrapped) >= 10 else (stream + unwrapped)
 
         # 1. RedLine VMProtect contiguous `#US` block (`%before%` -> host, port, build_id, mutex)
-        for idx in range(len(combined) - 4):
-            if combined[idx] == "%before%":
-                host_cand, port_cand, build_id, mtx_cand = combined[idx + 1 : idx + 5]
+        for idx in range(len(active_strings) - 4):
+            if active_strings[idx] == "%before%":
+                host_cand, port_cand, build_id, mtx_cand = active_strings[idx + 1 : idx + 5]
                 if port_cand.isdigit() and 1 <= int(port_cand) <= 65535:
                     ep = f"{host_cand}:{port_cand}"
                     c2_endpoints.add(ep)
@@ -272,31 +280,46 @@ def carve_dotnet_us_configs(buffer: bytes, wide_ascii: bytes = b"") -> Dict[str,
 
         # 2. Candidate keys and ciphertexts inside this `#US` stream
         b64_cands: List[Tuple[str, bytes]] = []
-        key_cands: List[str] = []
-        for s in combined:
+        b64_indices: List[int] = []
+        key_cand_map: Dict[str, int] = {}
+
+        for idx, s in enumerate(active_strings):
             if not s or len(s) > 1200:
                 continue
             if (raw := _try_b64_decode(s)) is not None:
                 b64_cands.append((s, raw))
+                if len(raw) >= 29:
+                    b64_indices.append(idx)
                 if 12 <= len(raw) <= 64:
                     try:
                         k_dec = raw.decode("utf-8")
-                        if k_dec.isprintable() and k_dec not in key_cands:
-                            key_cands.append(k_dec)
+                        if k_dec.isprintable() and k_dec not in key_cand_map:
+                            key_cand_map[k_dec] = idx
                     except UnicodeDecodeError:
                         pass
-            if 6 <= len(s) <= 64 and s.isprintable() and " " not in s and s not in key_cands:
-                key_cands.append(s)
+            if 6 <= len(s) <= 64 and s.isprintable() and " " not in s and s not in key_cand_map:
+                key_cand_map[s] = idx
+
+        if b64_indices:
+            key_cands = [
+                k
+                for k, k_idx in sorted(
+                    key_cand_map.items(),
+                    key=lambda kv: min(abs(kv[1] - b_idx) for b_idx in b64_indices),
+                )
+            ]
+        else:
+            key_cands = list(key_cand_map.keys())
 
         # 2a. Authenticate Pulsar GCM & Pulsar/DcRat/AsyncRAT/VenomRAT CBC+HMAC
         authenticated_key: Optional[str] = None
         authenticated_mode: Optional[str] = None
         authenticated_fam: Optional[str] = None
 
-        for key in key_cands[:60]:
+        for key in key_cands[:80]:
             if authenticated_key:
                 break
-            for _s, raw in b64_cands[:50]:
+            for _s, raw in b64_cands[:60]:
                 if len(raw) >= 29 and _try_decrypt_pulsar_gcm(key, raw) is not None:
                     authenticated_key, authenticated_mode, authenticated_fam = key, "GCM", "pulsar_rat"
                     break
@@ -338,7 +361,7 @@ def carve_dotnet_us_configs(buffer: bytes, wide_ascii: bytes = b"") -> Dict[str,
                             c2_endpoints.add(tok)
 
         # 2b. RedLine 3-step Base64+XOR decryption on `#US` streams with RedLine markers
-        token_set = set(combined)
+        token_set = set(active_strings)
         if any(m in token_set for m in ("IRemoteEndpoint", "DownloadAndExecuteUpdate", "ScanningArgs", "StringDecrypt")):
             detected_family = detected_family or "redline_stealer"
             for ct_str, _raw in b64_cands[:40]:

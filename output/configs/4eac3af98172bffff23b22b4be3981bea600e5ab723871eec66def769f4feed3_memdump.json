@@ -1,8 +1,8 @@
 {
   "hash": "4eac3af98172bffff23b22b4be3981bea600e5ab723871eec66def769f4feed3",
   "sha256": "4eac3af98172bffff23b22b4be3981bea600e5ab723871eec66def769f4feed3",
-  "analyzed_at": "2026-10-14T22:42:31Z",
-  "family_supposition": "generic_stealer_or_rat",
+  "analyzed_at": "2026-10-15T06:19:48Z",
+  "family_supposition": "redline_stealer",
   "sandbox_sources": [
     {
       "sandbox_id": "4eac3af98172bffff23b22b4be3981bea600e5ab723871eec66def769f4feed3_CAPE Sandbox",
@@ -42,7 +42,7 @@
     "ips_urls": [
       {
         "channel_type": "custom",
-        "value": "31.77.12.184"
+        "value": "31.77.12.184:5460"
       },
       {
         "channel_type": "custom",
@@ -52,11 +52,10 @@
     "webhooks": [],
     "crypto_wallets": [],
     "ddr": [],
-    "ftp_activity": [
-      "USER\nHKEY_CLASSES_ROOT",
-      "USER\nHKEY_LOCAL_MACHINE"
+    "ftp_activity": [],
+    "decoded_base64_c2_blobs": [
+      "RedLine #US config: C2=31.77.12.184:5460 ID=hubzero Mutex=MVQrAdSxOFGcABA"
     ],
-    "decoded_base64_c2_blobs": [],
     "rc4_decrypted_c2s": []
   },
   "behaviour_intel": {
@@ -71,10 +70,7 @@
     "mutexes": [
       "Global\\HFCEgMpv5960",
       "Global\\vqyxYfsv",
-      "Local\\Micr",
-      "Local\\Microsoft",
-      "Local\\Programs",
-      "Local\\Temp"
+      "MVQrAdSxOFGcABA"
     ],
     "pdb_paths": []
   },
@@ -82,9 +78,6 @@
   "in_memory_strings": [
     "Global\\HFCEgMpv5960",
     "Global\\vqyxYfsv",
-    "Local\\Micr",
-    "Local\\Microsoft",
-    "Local\\Programs",
-    "Local\\Temp"
+    "MVQrAdSxOFGcABA"
   ]
 }

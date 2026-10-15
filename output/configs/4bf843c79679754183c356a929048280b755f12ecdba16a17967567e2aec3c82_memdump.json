@@ -1,7 +1,7 @@
 {
   "hash": "4bf843c79679754183c356a929048280b755f12ecdba16a17967567e2aec3c82",
   "sha256": "4bf843c79679754183c356a929048280b755f12ecdba16a17967567e2aec3c82",
-  "analyzed_at": "2026-10-14T22:39:44Z",
+  "analyzed_at": "2026-10-15T06:13:18Z",
   "family_supposition": "pulsar_rat",
   "sandbox_sources": [
     {
@@ -45,6 +45,10 @@
     "ips_urls": [
       {
         "channel_type": "custom",
+        "value": "10.0.2.3:4782"
+      },
+      {
+        "channel_type": "custom",
         "value": "https://api.ipify.org/"
       },
       {
@@ -54,20 +58,26 @@
       {
         "channel_type": "custom",
         "value": "https://www.amyuni.com/downloads/usbmmidd_v2.zip"
+      },
+      {
+        "channel_type": "custom",
+        "value": "localhost:4782"
       }
     ],
     "webhooks": [],
     "crypto_wallets": [],
     "ddr": [],
-    "ftp_activity": [
-      "USER\nConfig",
-      "USER\nHKEY_CLASSES_ROOT",
-      "USER\nHKEY_LOCAL_MACHINE",
-      "USER\nLOCAL_USER",
-      "USER\nMACHINE",
-      "USER\nROAMING_USER"
+    "ftp_activity": [],
+    "decoded_base64_c2_blobs": [
+      "pulsar_rat Settings: SKIRTA TIK MOKYMOSI REIKMĖMS",
+      "pulsar_rat Settings: localhost:4782;10.0.2.3:4782;",
+      "pulsar_rat Settings: SubDir",
+      "pulsar_rat Settings: Client.exe",
+      "pulsar_rat Settings: cd648a93-a09f-45c3-bbbc-5b71914d995b",
+      "pulsar_rat Settings: KITM Startup",
+      "pulsar_rat Settings: KITM",
+      "pulsar_rat Settings: Logs"
     ],
-    "decoded_base64_c2_blobs": [],
     "rc4_decrypted_c2s": []
   },
   "behaviour_intel": {
@@ -78,37 +88,20 @@
       "Firefox logins.json"
     ],
     "mutexes": [
-      "Global\\BFE_Notify_Event_",
       "Global\\LuJbdBK",
       "Global\\sfkeoPuAyE3324",
       "Global\\sfkeoPuAyE4264",
-      "Local\\Application",
-      "Local\\BraveSoftware",
-      "Local\\Google",
-      "Local\\Micro",
-      "Local\\Microsoft",
-      "Local\\Programs",
-      "Local\\Temp",
-      "Local\\cd648a93-a09f-45c3-bbbc-5b71914d995b"
+      "Local\\cd648a93-a09f-45c3-bbbc-5b71914d995b",
+      "cd648a93-a09f-45c3-bbbc-5b71914d995b"
     ],
-    "pdb_paths": [
-      "C:\\Windows\\System.pdb"
-    ]
+    "pdb_paths": []
   },
   "sqlite_database_count": 0,
   "in_memory_strings": [
-    "C:\\Windows\\System.pdb",
-    "Global\\BFE_Notify_Event_",
     "Global\\LuJbdBK",
     "Global\\sfkeoPuAyE3324",
     "Global\\sfkeoPuAyE4264",
-    "Local\\Application",
-    "Local\\BraveSoftware",
-    "Local\\Google",
-    "Local\\Micro",
-    "Local\\Microsoft",
-    "Local\\Programs",
-    "Local\\Temp",
-    "Local\\cd648a93-a09f-45c3-bbbc-5b71914d995b"
+    "Local\\cd648a93-a09f-45c3-bbbc-5b71914d995b",
+    "cd648a93-a09f-45c3-bbbc-5b71914d995b"
   ]
 }
